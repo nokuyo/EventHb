@@ -10,7 +10,7 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch events from the Django backend (adjust the URL if needed)
+  // Fetch events from the Django backend
   useEffect(() => {
     fetch("http://localhost:8000/api/event_list_view/")
       .then((response) => {
@@ -67,16 +67,18 @@ function Dashboard() {
                   <strong>Location:</strong> {event.event_place}
                 </p>
                 <p>
-                  <strong>Estimated Attendees:</strong>{" "}
-                  {event.estimated_attendees}
+                  <strong>Estimated Attendees:</strong> {event.estimated_attendees}
+                </p>
+                {/* Pass each event's unique address as a prop */}
+                <p>
+                  <strong>Proximity:</strong>{" "}
+                  <GeolocationComponent address={event.event_place} />
                 </p>
               </li>
             ))}
           </ul>
         )}
-
-        {/* Render the geolocation component */}
-        <GeolocationComponent />
+        
       </div>
 
       <Footer />
@@ -85,4 +87,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
