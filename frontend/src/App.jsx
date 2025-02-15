@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import subu from "./assets/subu.png";
+import GeolocationComponent from "./components/Geolocation.jsx"
 
 function App() {
   const [data, setData] = useState(null);
@@ -31,7 +32,7 @@ function App() {
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
       {data && <p>{data.message}</p>}
       <img src={subu} alt="subu" className="subulol" />
-
+      <GeolocationComponent />
     </div>
   );
 }
