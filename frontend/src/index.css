@@ -1,21 +1,21 @@
 :root {
     /* Light Mode Colors */
-    --primary-bg: #d0dbe6;
-    --secondary-bg: #8ea6c1;
-    --text-color: rgba(255, 255, 255, 0.87);
-    --box-bg: rgba(255, 255, 255, 0.15);
-    --box-shadow: rgba(0, 0, 0, 0.15);
-    --border-radius: 10px;
+    --primary-bg: #3152ad;
+    --secondary-bg: #5b70b7;
+    --text-color: rgba(255, 255, 255, 0.9);
+    --box-bg: rgba(255, 255, 255, 0.1);
+    --box-shadow: rgba(0, 0, 0, 0.2);
+    --border-radius: 15px;
 
     /* Dark Mode (if supported) */
     color-scheme: light dark;
-    --dark-primary-bg: #1a1a2e;
-    --dark-secondary-bg: #16213e;
+    --dark-primary-bg: #0f172a;
+    --dark-secondary-bg: #1e293b;
     --dark-text-color: rgba(255, 255, 255, 0.9);
 
     /* Font Settings */
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
+    font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
     font-weight: 400;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -27,6 +27,9 @@
 body {
     background: linear-gradient(to bottom right, var(--primary-bg), var(--secondary-bg));
     color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 /* General Container */
@@ -36,16 +39,18 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    text-align: center;
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
+    text-align: center;
 }
 
 /* Message Styling */
 .message {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
 }
 
 /* Header and Footer */
@@ -54,11 +59,11 @@ body {
     max-width: 1400px;
     padding: 20px;
     background: var(--box-bg);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 10px var(--box-shadow);
-    text-align: center;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 15px var(--box-shadow);
     border-radius: var(--border-radius);
     margin: 20px auto;
+    text-align: center;
 }
 
 /* Mobile Optimization */
@@ -66,7 +71,6 @@ body {
     .container {
         width: 95%;
     }
-
     .header, .footer {
         width: 100%;
         border-radius: 0;

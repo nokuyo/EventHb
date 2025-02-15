@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // Import Link for navigation
 import GeolocationComponent from "./Geolocation.jsx";
 import Navbar from "./Navbar.jsx";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
-import "../styles/Dashboard.css";  // Ensure this CSS file exists
+import "../styles/Dashboard.css"; // Ensure this CSS file exists
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
@@ -33,10 +34,15 @@ function Dashboard() {
     <div>
       <Navbar />
       <Header />
-
       <div className="container">
-        <h2 className="event-section-title">Nearby Events</h2>
+        {/* Add a link to the Event Registration page */}
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          <Link to="/event-registration" className="register-event-link">
+            Register a New Event
+          </Link>
+        </div>
 
+        <h2 className="event-section-title">Nearby Events</h2>
         {loading && <p>Loading events...</p>}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
         {!loading && !error && events.length === 0 && (
@@ -49,7 +55,6 @@ function Dashboard() {
                 <h3>{event.title}</h3>
                 {event.image && (
                   <img
-                    // Prepend the backend URL to the relative image path
                     src={`http://localhost:8000${event.image}`}
                     alt={event.title}
                     style={{ maxWidth: "300px", display: "block" }}
@@ -69,7 +74,6 @@ function Dashboard() {
                 <p>
                   <strong>Estimated Attendees:</strong> {event.estimated_attendees}
                 </p>
-                {/* Pass each event's unique address as a prop */}
                 <p>
                   <strong>Proximity:</strong>{" "}
                   <GeolocationComponent address={event.event_place} />
@@ -78,9 +82,7 @@ function Dashboard() {
             ))}
           </ul>
         )}
-        
       </div>
-
       <Footer />
     </div>
   );

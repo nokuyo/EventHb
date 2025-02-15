@@ -1,120 +1,96 @@
-/* General Styles */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(to bottom right, #d0dbe6, #8ea6c1);
-  color: white;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 /* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
-  width: 90%;
-  max-width: 1200px;
-  margin: 20px auto;
+  background: linear-gradient(to right, #1e3a8a, #1e40af);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
 }
 
 .navbar h1 {
   font-size: 24px;
   font-weight: bold;
   color: white;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
 }
 
 .nav-links a {
   color: white;
   text-decoration: none;
-  margin-left: 15px;
   font-size: 18px;
+  padding: 10px 15px;
   transition: all 0.3s ease;
+  border-radius: 8px;
 }
 
 .nav-links a:hover {
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Header */
-.header {
-  text-align: center;
-  padding: 60px 20px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  color: white;
-  margin: 20px auto;
-  width: 80%;
-  max-width: 900px;
-}
-
-.header h1 {
-  font-size: 36px;
-  font-weight: bold;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-}
-
-.header p {
-  font-size: 18px;
-  opacity: 0.85;
-}
-
-/* Event Section Title */
+/* Event Section */
 .event-section-title {
   text-align: center;
   margin-top: 30px;
-  font-size: 28px;
+  font-size: 32px;
   color: white;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  letter-spacing: 1px;
 }
 
-/* Full-Screen Smooth Scrolling Event List */
+/* Event List */
 .event-list {
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
-  height: 90vh;
-  scroll-snap-type: y proximity;
+  height: 80vh;
+  scroll-snap-type: y mandatory;
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   padding: 20px 0;
+  margin: 20px auto;
 }
 
-/* Event Cards (One per View, Centered) */
+/* Event Cards */
 .event-card {
   width: 100%;
-  max-width: 400px;
-  height: 80vh;
-  background: rgba(255, 255, 255, 0.25);
+  max-width: 600px;
+  height: 75vh;
+  background: linear-gradient(to bottom, #1e3a8a, #1e40af);
   padding: 20px;
-  border-radius: 15px;
+  border-radius: var(--border-radius);
   backdrop-filter: blur(20px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-bottom: 20px;
 }
 
 .event-card:hover {
   transform: scale(1.03);
-  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.25);
 }
 
 .event-card img {
@@ -126,13 +102,16 @@ body {
 }
 
 .event-card h2 {
-  font-size: 22px;
+  font-size: 24px;
   margin-top: 15px;
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
 .event-card p {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.85);
+  margin-top: 10px;
 }
 
 /* Scrollbar Customization */
@@ -141,7 +120,7 @@ body {
 }
 
 .event-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .event-list::-webkit-scrollbar-thumb {
@@ -152,34 +131,65 @@ body {
 /* Footer */
 .footer {
   text-align: center;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.15);
+  padding: 40px;
+  background: linear-gradient(to bottom, #1e3a8a, #1e40af);
   backdrop-filter: blur(15px);
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  margin: 20px auto;
-  width: 80%;
-  max-width: 900px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  position: relative;
+  margin-top: auto;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
 }
 
-.footer p {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.85);
+/* Desktop Centering */
+@media (min-width: 1024px) {
+  .container {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+  }
+  .event-list {
+      max-width: 800px;
+  }
 }
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .event-card {
-    width: 95%;
-    height: 85vh;
+      width: 95%;
+      height: 85vh;
   }
-
   .navbar {
-    flex-direction: column;
-    text-align: center;
+      flex-direction: column;
+      text-align: center;
+      position: relative;
   }
-
   .nav-links {
-    margin-top: 10px;
+      margin-top: 10px;
   }
+}
+
+/* Styling for the Register Event Link */
+.register-event-link {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to right, #1e3a8a, #1e40af);
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.register-event-link:hover {
+  background: linear-gradient(to right, #1e40af, #1e3a8a);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
