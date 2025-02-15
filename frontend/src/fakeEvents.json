@@ -1,0 +1,33 @@
+[
+    {
+      "id": 1,
+      "image": "https://source.unsplash.com/300x200/?party",
+      "title": "Tech Conference 2025",
+      "host": "WSU CS Club",
+      "description": "A meetup for developers to discuss the latest in AI and ML.",
+      "time": "March 20, 2025 - 10:00 AM",
+      "place": "Pullman, WA",
+      "attendees": 150
+    },
+    {
+      "id": 2,
+      "image": "https://source.unsplash.com/300x200/?concert",
+      "title": "Live Concert",
+      "host": "Local Music Fest",
+      "description": "An outdoor concert featuring top local artists.",
+      "time": "April 5, 2025 - 7:00 PM",
+      "place": "Seattle, WA",
+      "attendees": 300
+    },
+    {
+      "id": 3,
+      "image": "https://source.unsplash.com/300x200/?hackathon",
+      "title": "Hackathon Challenge",
+      "host": "Tech Innovators",
+      "description": "A 48-hour coding competition for developers of all levels.",
+      "time": "April 15, 2025 - 9:00 AM",
+      "place": "San Francisco, CA",
+      "attendees": 200
+    }
+  ]
+  
