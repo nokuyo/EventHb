@@ -25,7 +25,7 @@ def event_list_view(request):
                 'title': event.title,
                 # For the host, you might return the host's ID, username, or other detail;
                 # adjust as needed (assuming UserProfile has a 'user' field with a username)
-                'host': event.host.user.username if hasattr(event.host, 'user') else event.host.id,
+                'host': event.host.user.username if hasattr(event.host, 'user') else str(event.host),
                 'description': event.description,
                 # Convert the datetime to an ISO formatted string
                 'event_time': event.event_time.isoformat(),
@@ -42,6 +42,5 @@ class EventViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         # Automatically set the host using the logged-in user's profile.
-        # This assumes that every User has an associated UserProfile.
-        user_profile = self.request.user.userprofile  
-        serializer.save(host=user_profile)
+        # This assumes that every User has an associated UserProfile. 
+        serializer.save()
