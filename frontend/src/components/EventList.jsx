@@ -14,7 +14,7 @@ function EventList() {
       setEvents(fakeEvents);
     } else {
       // ✅ Fetching from backend API (Commented out for now)
-      fetch("http://localhost:8000/api/events/")
+      fetch("http://localhost:8000/api/event_list_view/")
         .then((res) => {
           if (!res.ok) throw new Error("Failed to fetch events");
           return res.json();
