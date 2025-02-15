@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import subu from "./assets/subu.png";
-import GeolocationComponent from "./components/Geolocation.jsx"
+import GeolocationComponent from "./components/GeolocationTest.jsx"
 
 function App() {
   const [data, setData] = useState(null);
