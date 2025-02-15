@@ -1,0 +1,28 @@
+# Ignore the virtual environment folder
+venv/
+# If you're using a different name for your virtual environment, replace `venv/` with that name (e.g., `env/`).
+
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore IDE/editor-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore log files and databases
+*.log
+*.sqlite3
+
+# Ignore environment variables file
+.env
+.env.local
+
+# Ignore distribution/build files
+dist/
+build/
+*.egg-info/
