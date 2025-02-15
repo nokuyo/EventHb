@@ -1,3 +1,4 @@
+// GeolocationComponent.jsx
 import React, { useState, useEffect } from 'react';
 
 const GeolocationComponent = ({ address }) => {
@@ -5,7 +6,7 @@ const GeolocationComponent = ({ address }) => {
   const [distance, setDistance] = useState(null);
   const [error, setError] = useState(null);
 
-  // Function to geocode an address using Nominatim API
+  // Function to geocode an address using the Nominatim API
   const geocodeAddress = async (address) => {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
     try {
@@ -43,17 +44,14 @@ const GeolocationComponent = ({ address }) => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          // Create a JSON string from the user's latitude and longitude
           const locationData = { latitude, longitude };
           const jsonString = JSON.stringify(locationData);
           setLocationJSON(jsonString);
           console.log("User Location JSON:", jsonString);
 
           try {
-            // Use the unique address prop from the parent
             const addressCoords = await geocodeAddress(address);
             console.log("Address Coordinates:", addressCoords);
-            // Calculate the distance between the user and the address
             const calculatedDistance = haversineDistance(
               latitude,
               longitude,
@@ -74,7 +72,10 @@ const GeolocationComponent = ({ address }) => {
     } else {
       setError("Geolocation is not supported by this browser.");
     }
-  }, [address]); // Effect runs again if the address prop changes
+  }, [address]);
+
+  // Define a threshold distance (in km) for the notification
+  const thresholdDistance = 0.8;
 
   return (
     <div>
@@ -83,15 +84,21 @@ const GeolocationComponent = ({ address }) => {
       ) : (
         <>
           <p>
-            {/* {locationJSON
+            {locationJSON
               ? `User Location JSON: ${locationJSON}`
-              : "Fetching user location..."} */}
+              : "Fetching user location..."}
           </p>
           <p>
             {distance !== null
               ? `Distance to ${address}: ${distance.toFixed(2)} km`
               : "Calculating distance..."}
           </p>
+          {/* If the user is within the threshold distance, show a notification */}
+          {distance !== null && distance <= thresholdDistance && (
+            <p style={{ color: 'green', fontWeight: 'bold' }}>
+              You're within {thresholdDistance} km of the event!
+            </p>
+          )}
         </>
       )}
     </div>
