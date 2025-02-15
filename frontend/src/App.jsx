@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import subu from "./assets/subu.png";
-import GeolocationComponent from "./components/Geolocation.jsx"
+import GeolocationComponent from "./components/Geolocation.jsx";
+import Navbar from "./components/Navbar";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import EventList from "./components/EventList";
+import "./styles/App.css";  // Make sure to create and link this CSS file
 
 function App() {
   const [data, setData] = useState(null);
@@ -26,16 +31,27 @@ function App() {
   }, []);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Hello world!</h1>
-      {loading && <p>Loading data...</p>}
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
-      {data && <p>{data.message}</p>}
-      <img src={subu} alt="subu" className="subulol" />
-      <GeolocationComponent />
+    <div>
+      <Navbar />
+      <Header />
+      <div className="container">
+        <h1>Hello world!</h1>
+        {loading && <p>Loading data...</p>}
+        {error && <p style={{ color: "red" }}>Error: {error}</p>}
+        {data && <p>{data.message}</p>}
+        
+        <img src={subu} alt="subu" className="subulol" />
+        
+        {/* Keep your existing Geolocation Component */}
+        <GeolocationComponent />
+
+        {/* Event Section */}
+        <h2 className="event-section-title">Nearby Events</h2>
+        <EventList />
+      </div>
+      <Footer />
     </div>
   );
 }
 
 export default App;
-
