@@ -42,6 +42,5 @@ class EventViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         # Automatically set the host using the logged-in user's profile.
-        # This assumes that every User has an associated UserProfile.
-        user_profile = self.request.user.userprofile  
-        serializer.save(host=user_profile)
+        # This assumes that every User has an associated UserProfile. 
+        serializer.save()
