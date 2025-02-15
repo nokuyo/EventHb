@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import subu from "./assets/subu.png";
 import GeolocationComponent from "./components/Geolocation.jsx";
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
@@ -34,21 +33,21 @@ function App() {
     <div>
       <Navbar />
       <Header />
+
       <div className="container">
-        <h1>Hello world!</h1>
+        {/* Centered Event Section */}
+        <h2 className="event-section-title">Nearby Events</h2>
+        <EventList />
+
+        {/* Geolocation Component */}
+        <GeolocationComponent />
+
+        {/* Display API Test Data (if needed) */}
         {loading && <p>Loading data...</p>}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
         {data && <p>{data.message}</p>}
-        
-        <img src={subu} alt="subu" className="subulol" />
-        
-        {/* Keep your existing Geolocation Component */}
-        <GeolocationComponent />
-
-        {/* Event Section */}
-        <h2 className="event-section-title">Nearby Events</h2>
-        <EventList />
       </div>
+
       <Footer />
     </div>
   );
