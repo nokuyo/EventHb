@@ -65,12 +65,14 @@ margin: 200px;
   padding: 50px 10px; /* Add padding for spacing */
   color: white; /* White text for contrast */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  border-top-left-radius: var(--border-radius); /* Rounded corners */
+  border-top-right-radius: var(--border-radius);
   border-bottom-left-radius: var(--border-radius); /* Rounded corners */
   border-bottom-right-radius: var(--border-radius);
   margin-bottom: 20px; /* Add spacing below the header */
   background: linear-gradient(270deg, #afafaf, #3f81fc, #000000); /* Gradient */
   background-size: 300% 100%; /* Extend the gradient size for animation */
-  animation: movingGradient 5s infinite linear; /* Apply the animation */
+  animation: movingGradient 9s infinite linear; /* Apply the animation */
   width: 60%;
 }
 
