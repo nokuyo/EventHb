@@ -1,10 +1,18 @@
-// GeolocationComponent.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-const GeolocationComponent = ({ address }) => {
-  const [locationJSON, setLocationJSON] = useState('');
+const GeolocationComponent = ({ address, eventId, estimatedAttendees, onAttendanceUpdate }) => {
+  const [locationJSON, setLocationJSON] = useState("");
   const [distance, setDistance] = useState(null);
   const [error, setError] = useState(null);
+  const [updateMessage, setUpdateMessage] = useState("");
+  const [hasAttended, setHasAttended] = useState(false); // Track attendance
+
+  useEffect(() => {
+    // Ensure localStorage has a valid entry for this event
+    if (eventId && localStorage.getItem(`attended_${eventId}`)) {
+      setHasAttended(true);
+    }
+  }, [eventId]);
 
   // Function to geocode an address using the Nominatim API
   const geocodeAddress = async (address) => {
@@ -45,9 +53,8 @@ const GeolocationComponent = ({ address }) => {
         async (position) => {
           const { latitude, longitude } = position.coords;
           const locationData = { latitude, longitude };
-          const jsonString = JSON.stringify(locationData);
-          setLocationJSON(jsonString);
-          console.log("User Location JSON:", jsonString);
+          setLocationJSON(JSON.stringify(locationData));
+          console.log("User Location JSON:", locationData);
 
           try {
             const addressCoords = await geocodeAddress(address);
@@ -75,7 +82,36 @@ const GeolocationComponent = ({ address }) => {
   }, [address]);
 
   // Define a threshold distance (in km) for the notification
-  const thresholdDistance = 0.8;
+  const thresholdDistance = 1;
+
+  const handleAttend = async () => {
+    if (hasAttended) {
+      setUpdateMessage("You have already marked your attendance.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/events/${eventId}/attend/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const updatedEvent = await response.json();
+      if (onAttendanceUpdate) {
+        onAttendanceUpdate(updatedEvent);
+      }
+      setUpdateMessage("Attendance updated!");
+      setHasAttended(true);
+      localStorage.setItem(`attended_${eventId}`, "true");
+    } catch (error) {
+      console.error("Error updating event:", error);
+      setUpdateMessage("Error updating attendance.");
+    }
+  };
 
   return (
     <div>
@@ -84,20 +120,20 @@ const GeolocationComponent = ({ address }) => {
       ) : (
         <>
           <p>
-            {locationJSON
-              ? `User Location JSON: ${locationJSON}`
-              : "Fetching user location..."}
-          </p>
-          <p>
             {distance !== null
               ? `Distance to ${address}: ${distance.toFixed(2)} km`
               : "Calculating distance..."}
           </p>
-          {/* If the user is within the threshold distance, show a notification */}
           {distance !== null && distance <= thresholdDistance && (
-            <p style={{ color: 'green', fontWeight: 'bold' }}>
-              You're within {thresholdDistance} km of the event!
-            </p>
+            <>
+              <p style={{ color: "black", fontWeight: "bold" }}>
+                You're close to this event! Click below to mark your attendance:
+              </p>
+              <button onClick={handleAttend} disabled={hasAttended}>
+                {hasAttended ? "Attendance Marked" : "I'm Here"}
+              </button>
+              {updateMessage && <p>{updateMessage}</p>}
+            </>
           )}
         </>
       )}
