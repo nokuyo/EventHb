@@ -1,0 +1,65 @@
+/* Admin.css */
+
+/* Main container for admin content */
+.admin-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Page Title */
+  .admin-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Subsection headings (e.g., Manage Users) */
+  .admin-subtitle {
+    font-size: 22px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  /* General paragraph styling */
+  .admin-text {
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  
+  /* Dropdown styling */
+  .admin-dropdown {
+    margin-right: 10px;
+    padding: 6px;
+    font-size: 14px;
+  }
+  
+  /* Buttons for actions (e.g., Remove user, Save Changes) */
+  .admin-button {
+    padding: 6px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007bff; /* Blue background */
+    color: #fff;              /* White text */
+    font-size: 14px;
+  }
+  
+  .admin-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* A container for the event edit "pop-up" with a white border */
+  .admin-event-edit {
+    margin-left: 40px;
+    padding: 20px;
+    border: 2px solid #fff;    /* White border */
+    border-radius: 8px;        /* Rounded corners */
+    background-color: #f9f9f9; /* Light background */
+    color: #000;               /* <-- Make text black ONLY in this container */
+  }
+  
