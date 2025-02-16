@@ -126,8 +126,6 @@ margin: 200px;
   z-index: 10;
 }
 
-
-
 /* Event Cards */
 .event-card {
   width: 100%;
@@ -175,16 +173,16 @@ margin: 200px;
 
 /* Footer */
 .footer {
-  text-align: center;
-  padding: 40px;
-  background: linear-gradient(to bottom, #1e3a8a, #1e40af);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
-  width: 100%;
+  text-align: center; /* Center align content */
+  padding: 15px 20px; /* Reduce padding for a compact look */
+  background: linear-gradient(to bottom, #1e3a8a, #1e40af); /* Gradient background */
+  backdrop-filter: blur(15px); /* Frosted glass effect */
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 100%; /* Full width */
   position: relative;
-  margin-top: auto;
-  border-top-left-radius: var(--border-radius);
-  border-top-right-radius: var(--border-radius);
+  margin-top: auto; /* Push footer to the bottom of the page */
+  border-top-left-radius: 16px; /* Rounded corners */
+  border-top-right-radius: 16px;
 }
 
 /* Desktop Centering */
