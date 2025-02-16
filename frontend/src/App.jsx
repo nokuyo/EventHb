@@ -6,7 +6,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx"
 import Signup from "./components/Signup"
 import Login from "./components/Login"
 import UpdateProfile from './components/UpdateProfile';
-import Admin from "./components/Admin"
+import Admin from "./components/admin"
 
 function App() {
     return (
@@ -27,6 +27,7 @@ function App() {
                             </PrivateRoute>
                         }
                     ></Route>
+                    <Route 
                         path="/profile" 
                         element={
                             <PrivateRoute>
