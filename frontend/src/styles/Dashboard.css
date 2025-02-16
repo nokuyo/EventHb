@@ -16,6 +16,11 @@
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 }
+/* Logo Styling */
+.logo {
+  height: 80px; /* Adjust the height of the logo */
+  width: auto; /* Maintain aspect ratio */
+}
 
 .navbar h1 {
   font-size: 24px;
