@@ -78,7 +78,7 @@ function Dashboard() {
                   <strong>Location:</strong> {event.event_place}
                 </p>
                 <p>
-                  <strong>Estimated Attendees:</strong> {event.estimated_attendees}
+                  <strong>Attendees:</strong> {event.estimated_attendees}
                 </p>
                 <p>
                   <strong>Proximity:</strong>{" "}
