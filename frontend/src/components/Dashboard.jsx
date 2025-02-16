@@ -10,6 +10,7 @@ function Dashboard() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sortBy, setSortBy] = useState("upcoming"); // Sorting criteria
 
   // Fetch events from the Django backend
   useEffect(() => {
@@ -30,10 +31,40 @@ function Dashboard() {
       });
   }, []);
 
+  // Helper function to sort events
+  const sortEvents = (events, sortBy) => {
+    switch (sortBy) {
+      case "upcoming":
+        // Sort by event time in ascending order (future events first)
+        return events
+          .filter(event => new Date(event.event_time) > new Date())
+          .sort((a, b) => new Date(a.event_time) - new Date(b.event_time));
+      case "closest":
+        // Sort by proximity to the current time
+        return events.sort(
+          (a, b) =>
+            Math.abs(new Date(a.event_time) - new Date()) -
+            Math.abs(new Date(b.event_time) - new Date())
+        );
+      case "most_active":
+        // Sort by estimated attendees in descending order
+        return events.sort((a, b) => b.estimated_attendees - a.estimated_attendees);
+      default:
+        return events;
+    }
+  };
+
+  // Apply sorting to the events
+  const sortedEvents = sortEvents(events, sortBy);
+
   return (
     <div className="dashboard-container">
-      <Navbar />
-      <Header />
+      {/* Navbar and Header Container */}
+      <div className="header-container">
+        <Navbar />
+        <Header />
+      </div>
+
       <main className="content">
         {/* Add a link to the Event Registration page */}
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -41,15 +72,30 @@ function Dashboard() {
             Register a New Event
           </Link>
         </div>
+
+        {/* Sorting Dropdown */}
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          <label htmlFor="sort-by">Sort By:</label>
+          <select
+            id="sort-by"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option value="upcoming">Upcoming Events</option>
+            <option value="closest">Closest Event</option>
+            <option value="most_active">Most Active</option>
+          </select>
+        </div>
+
         <h2 className="event-section-title">Nearby Events</h2>
         {loading && <p>Loading events...</p>}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
-        {!loading && !error && events.length === 0 && (
+        {!loading && !error && sortedEvents.length === 0 && (
           <p>No events available.</p>
         )}
-        {!loading && !error && events.length > 0 && (
+        {!loading && !error && sortedEvents.length > 0 && (
           <div className="event-list">
-            {events.map((event) => (
+            {sortedEvents.map((event) => (
               <div key={event.id} className="event-card">
                 <h3>{event.title}</h3>
                 {event.image && (

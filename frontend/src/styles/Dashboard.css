@@ -49,6 +49,43 @@
   transform: scale(1.05);
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
 }
+.header-container {
+  display: flex;
+  flex-direction: column; /* Stack Navbar and Header vertically */
+  align-items: center; /* Center align items horizontally */
+  gap: 20px; /* Add space between Navbar and Header */
+margin: 200px;
+
+ 
+  margin-bottom: 20px; /* Add spacing below the header container */
+}
+/* Header Styling */
+.header {
+  text-align: center; /* Center align all content */
+  padding: 50px 10px; /* Add padding for spacing */
+  color: white; /* White text for contrast */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  border-bottom-left-radius: var(--border-radius); /* Rounded corners */
+  border-bottom-right-radius: var(--border-radius);
+  margin-bottom: 20px; /* Add spacing below the header */
+  background: linear-gradient(270deg, #afafaf, #3f81fc, #000000); /* Gradient */
+  background-size: 300% 100%; /* Extend the gradient size for animation */
+  animation: movingGradient 5s infinite linear; /* Apply the animation */
+  width: 60%;
+}
+
+.header h1 {
+  font-size: 24px; /* Smaller heading size */
+  margin: 0; /* Remove default margin */
+  font-weight: bold; /* Bold text for emphasis */
+  letter-spacing: 1px; /* Add spacing between letters */
+}
+
+.header p {
+  font-size: 14px; /* Smaller paragraph size */
+  margin: 5px 0 0; /* Reduce spacing between heading and paragraph */
+  color: rgba(255, 255, 255, 0.8); /* Slightly transparent text */
+}
 
 /* Event List */
 .event-list {
@@ -186,7 +223,7 @@
 
   /* Logo Styling */
   .logo {
-    height: 40px; /* Smaller logo for thinner navbar */
+    height: 70px; /* Smaller logo for thinner navbar */
     margin: 0 auto; /* Center the logo horizontally */
     display: block; /* Ensure proper alignment */
   }
@@ -304,6 +341,35 @@
 }
 
 /* Styling for the Register Event Link */
+.register-event-link {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to right, #1e3a8a, #1e40af);
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.register-event-link:hover {
+  background: linear-gradient(to right, #1e40af, #1e3a8a);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Sorting Dropdown */
+#sort-by {
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
 .register-event-link {
   display: inline-block;
   padding: 12px 24px;
