@@ -6,6 +6,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx"
 import Signup from "./components/Signup"
 import Login from "./components/Login"
 import UpdateProfile from './components/UpdateProfile';
+import Admin from "./components/Admin"
 
 function App() {
     return (
@@ -26,16 +27,25 @@ function App() {
                             </PrivateRoute>
                         }
                     ></Route>
-                    <Route path="/profile" 
+                        path="/profile" 
                         element={
                             <PrivateRoute>
-                                <UpdateProfile/>
+                                <UpdateProfile />
                             </PrivateRoute>
                         }
-                    ></Route>
-                    <Route path="/signup" element={<Signup/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/" element={<Login/>}/>
+                    />
+                    {/* New admin route */}
+                    <Route 
+                        path="/admin" 
+                        element={
+                            <PrivateRoute>
+                                <Admin />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/" element={<Login />} />
                 </Routes>
             </BrowserRouter>
         </div>
@@ -43,4 +53,3 @@ function App() {
 }
 
 export default App;
-
