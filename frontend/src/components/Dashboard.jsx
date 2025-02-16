@@ -31,17 +31,16 @@ function Dashboard() {
   }, []);
 
   return (
-    <div>
+    <div className="dashboard-container">
       <Navbar />
       <Header />
-      <div className="container">
+      <main className="content">
         {/* Add a link to the Event Registration page */}
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <Link to="/event-registration" className="register-event-link">
             Register a New Event
           </Link>
         </div>
-
         <h2 className="event-section-title">Nearby Events</h2>
         {loading && <p>Loading events...</p>}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
@@ -49,9 +48,9 @@ function Dashboard() {
           <p>No events available.</p>
         )}
         {!loading && !error && events.length > 0 && (
-          <ul>
+          <div className="event-list">
             {events.map((event) => (
-              <li key={event.id} style={{ marginBottom: "2rem" }}>
+              <div key={event.id} className="event-card">
                 <h3>{event.title}</h3>
                 {event.image && (
                   <img
@@ -78,11 +77,11 @@ function Dashboard() {
                   <strong>Proximity:</strong>{" "}
                   <GeolocationComponent address={event.event_place} />
                 </p>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
-      </div>
+      </main>
       <Footer />
     </div>
   );
