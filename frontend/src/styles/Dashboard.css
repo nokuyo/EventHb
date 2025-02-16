@@ -1,120 +1,156 @@
-/* General Styles */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(to bottom right, #d0dbe6, #8ea6c1);
-  color: white;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 /* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  border-radius: 15px;
-  width: 90%;
-  max-width: 1200px;
-  margin: 20px auto;
+  padding: 10px 20px; /* Reduced padding for a slimmer look */
+  background: linear-gradient(to right, #1e3a8a, #1e40af); /* Gradient background */
+  backdrop-filter: blur(15px); /* Frosted glass effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  border-bottom-left-radius: 16px; /* Rounded corners */
+  border-bottom-right-radius: 16px;
+ 
+}
+
+/* Logo Styling */
+.logo {
+  height: 50px; /* Smaller logo for a modern look */
+  width: auto; /* Maintain aspect ratio */
 }
 
 .navbar h1 {
-  font-size: 24px;
+  font-size: 20px; /* Smaller font size */
   font-weight: bold;
   color: white;
+  letter-spacing: 1px;
+  margin: 0; /* Remove default margin */
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px; /* Reduced spacing between links */
+  padding-right: 60px; /* Remove extra padding */
 }
 
 .nav-links a {
   color: white;
   text-decoration: none;
-  margin-left: 15px;
-  font-size: 18px;
+  font-size: 14px; /* Smaller font size for links */
+  padding: 8px 12px; /* Compact padding */
   transition: all 0.3s ease;
+  border-radius: 8px;
 }
 
 .nav-links a:hover {
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Header */
+/* Header Container */
+.header-container {
+  display: flex;
+  flex-direction: column; /* Stack Navbar and Header vertically */
+  align-items: center; /* Center align items horizontally */
+  gap: 15px; /* Reduced spacing between Navbar and Header */
+  margin-top: 80px; /* Adjusted margin to account for fixed navbar */
+  margin-bottom: 20px; /* Add spacing below the header container */
+}
+/* Header Styling */
 .header {
-  text-align: center;
-  padding: 60px 20px;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  color: white;
-  margin: 20px auto;
-  width: 80%;
-  max-width: 900px;
+  text-align: center; /* Center align all content */
+  padding: 50px 10px; /* Add padding for spacing */
+  color: white; /* White text for contrast */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  border-top-left-radius: var(--border-radius); /* Rounded corners */
+  border-top-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius); /* Rounded corners */
+  border-bottom-right-radius: var(--border-radius);
+  margin-bottom: 20px; /* Add spacing below the header */
+  background: linear-gradient(270deg, #afafaf, #3f81fc, #000000); /* Gradient */
+  background-size: 300% 100%; /* Extend the gradient size for animation */
+  animation: movingGradient 9s infinite linear; /* Apply the animation */
+  width: 60%;
 }
 
 .header h1 {
-  font-size: 36px;
-  font-weight: bold;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  font-size: 24px; /* Smaller heading size */
+  margin: 0; /* Remove default margin */
+  font-weight: bold; /* Bold text for emphasis */
+  letter-spacing: 1px; /* Add spacing between letters */
 }
 
 .header p {
-  font-size: 18px;
-  opacity: 0.85;
+  font-size: 14px; /* Smaller paragraph size */
+  margin: 5px 0 0; /* Reduce spacing between heading and paragraph */
+  color: rgba(255, 255, 255, 0.8); /* Slightly transparent text */
 }
 
-/* Event Section Title */
-.event-section-title {
-  text-align: center;
-  margin-top: 30px;
-  font-size: 28px;
-  color: white;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
-}
-
-/* Full-Screen Smooth Scrolling Event List */
+/* Event List */
 .event-list {
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
-  height: 90vh;
-  scroll-snap-type: y proximity;
+  height: 80vh;
+  scroll-snap-type: y mandatory;
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   padding: 20px 0;
+  margin: 20px auto;
+  position: relative; /* For scroll indicators */
+}
+/* Event Section Title */
+.event-section-title {
+  text-align: center; /* Centers the text horizontally */
+  margin: 30px auto; /* Adds vertical spacing and centers the element */
+  font-size: 32px;
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  letter-spacing: 1px;
 }
 
-/* Event Cards (One per View, Centered) */
+/* Scroll Indicators */
+.event-list::before,
+.event-list::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Event Cards */
 .event-card {
   width: 100%;
-  max-width: 400px;
-  height: 80vh;
-  background: rgba(255, 255, 255, 0.25);
+  max-width: 600px;
+  background: white; /* Light background */
   padding: 20px;
-  border-radius: 15px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border: 4px solid white; /* Prominent white border */
+  
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-bottom: 20px;
 }
 
 .event-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.25);
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); /* Increased shadow on hover */
 }
 
 .event-card img {
@@ -125,61 +161,234 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.event-card h2 {
-  font-size: 22px;
+.event-card h3 {
+  font-size: 24px;
   margin-top: 15px;
+  color: #1e3a8a; /* Contrasting text color */
+  text-shadow: none; /* Remove text shadow */
 }
 
 .event-card p {
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-/* Scrollbar Customization */
-.event-list::-webkit-scrollbar {
-  width: 5px;
-}
-
-.event-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.event-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
+  color: #4b5563; /* Subtle gray text */
+  margin-top: 10px;
 }
 
 /* Footer */
 .footer {
-  text-align: center;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  margin: 20px auto;
-  width: 80%;
-  max-width: 900px;
+  text-align: center; /* Center align content */
+  padding: 15px 20px; /* Reduce padding for a compact look */
+  background: linear-gradient(to bottom, #1e3a8a, #1e40af); /* Gradient background */
+  backdrop-filter: blur(15px); /* Frosted glass effect */
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 100%; /* Full width */
+  position: relative;
+  margin-top: auto; /* Push footer to the bottom of the page */
+  border-top-left-radius: 16px; /* Rounded corners */
+  border-top-right-radius: 16px;
 }
 
-.footer p {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.85);
+/* Desktop Centering */
+@media (min-width: 1024px) {
+  .container {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+  }
+  .event-list {
+      max-width: 800px;
+  }
 }
-
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
-  .event-card {
-    width: 95%;
-    height: 85vh;
+  /* Navbar Adjustments */
+  .navbar {
+    display: flex;
+    flex-direction: row; /* Keep items in a row */
+    width: 95.3%;
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Vertically center items */
+    padding: 5px 10px; /* Compact padding */
+    background: linear-gradient(to right, #1e3a8a, #1e40af); /* Ensure background is visible */
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+   
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure navbar stays on top */
+    height: 60px; /* Fixed height for compactness */
   }
 
-  .navbar {
+  /* Logo Styling */
+  .logo {
+    height: 70px; /* Smaller logo for thinner navbar */
+    margin: 0 auto; /* Center the logo horizontally */
+    display: block; /* Ensure proper alignment */
+  }
+
+  /* Hamburger Menu */
+  .hamburger-menu {
+    display: flex;
     flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    margin-left: auto; /* Push hamburger menu to the right */
+  }
+
+  .hamburger-menu .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger-menu.open .bar:nth-child(1) {
+    transform: rotate(45deg) translateY(8px);
+  }
+
+  .hamburger-menu.open .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-menu.open .bar:nth-child(3) {
+    transform: rotate(-45deg) translateY(-8px);
+  }
+
+  /* Nav Links */
+  .nav-links {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    top: 60px; /* Position below the navbar */
+    right: 0;
+    background: linear-gradient(to bottom, #1e3a8a, #1e40af);
+    width: 100%;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+  }
+
+  .nav-links.active {
+    display: flex; /* Show nav links when active */
+  }
+
+  .nav-links a {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+  }
+
+  /* Event Section Title */
+  .event-section-title {
+    font-size: 24px;
+    margin: 20px auto;
     text-align: center;
   }
 
-  .nav-links {
-    margin-top: 10px;
+  /* Event List */
+  .event-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    height: auto;
+    max-width: 100%;
+    padding: 10px 0;
   }
+
+  /* Event Cards */
+  .event-card {
+    width: 95%;
+    height: auto;
+    padding: 15px;
+    border: 3px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .event-card img {
+    height: 200px;
+  }
+
+  .event-card h3 {
+    font-size: 20px;
+  }
+
+  .event-card p {
+    font-size: 14px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 20px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  /* Register Event Link */
+  .register-event-link {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
+/* Styling for the Register Event Link */
+.register-event-link {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to right, #1e3a8a, #1e40af);
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.register-event-link:hover {
+  background: linear-gradient(to right, #1e40af, #1e3a8a);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Sorting Dropdown */
+#sort-by {
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.register-event-link {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to right, #1e3a8a, #1e40af);
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.register-event-link:hover {
+  background: linear-gradient(to right, #1e40af, #1e3a8a);
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
