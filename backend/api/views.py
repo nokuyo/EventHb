@@ -6,7 +6,8 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .models import Event
 from .serializers import EventSerializer
-# Create your views here.
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 
 # views.py
@@ -36,11 +37,29 @@ def event_list_view(request):
     else:
         return JsonResponse({'error': 'GET request required.'}, status=400)
     
+# views.py
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from .models import Event
+from .serializers import EventSerializer
+
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
-    def perform_create(self, serializer):
-        # Automatically set the host using the logged-in user's profile.
-        # This assumes that every User has an associated UserProfile. 
-        serializer.save()
+    @action(detail=True, methods=['post'])
+    def attend(self, request, pk=None):
+        event = self.get_object()
+        # Get a list of attended event IDs from the session (or initialize it)
+        attended_events = request.session.get('attended_events', [])
+        if event.id in attended_events:
+            return Response({"detail": "Already attended."}, status=status.HTTP_400_BAD_REQUEST)
+        # Increase the attendance count
+        event.estimated_attendees += 1
+        event.save()
+        # Mark this event as attended in the session
+        attended_events.append(event.id)
+        request.session['attended_events'] = attended_events
+        serializer = self.get_serializer(event)
+        return Response(serializer.data)

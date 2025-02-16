@@ -30,6 +30,13 @@ function Dashboard() {
       });
   }, []);
 
+  // Callback to update an event when attendance changes
+  const handleAttendanceUpdate = (updatedEvent) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
+    );
+  };
+
   return (
     <div className="dashboard-container">
       <Navbar />
@@ -71,11 +78,17 @@ function Dashboard() {
                   <strong>Location:</strong> {event.event_place}
                 </p>
                 <p>
-                  <strong>Estimated Attendees:</strong> {event.estimated_attendees}
+                  <strong>Attendees:</strong> {event.estimated_attendees}
                 </p>
                 <p>
                   <strong>Proximity:</strong>{" "}
-                  <GeolocationComponent address={event.event_place} />
+                    {/* Pass the unique event data to GeolocationComponent */}
+                    <GeolocationComponent 
+                      address={event.event_place} 
+                      eventId={event.id} 
+                      estimatedAttendees={event.estimated_attendees}
+                      onAttendanceUpdate={handleAttendanceUpdate}
+                    />
                 </p>
               </div>
             ))}
