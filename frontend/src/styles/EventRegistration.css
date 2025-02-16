@@ -90,10 +90,6 @@
 
 }
 
-
-
-
-
 .popup-overlay {
   position: fixed;          /* Stays in place if you scroll */
   top: 0;
@@ -120,4 +116,19 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+}
+
+.custom-file-label {
+  display: inline-block;
+  padding: 12px;
+  font-size: 16px;
+  color: #fff;            
+  background-color: #333; 
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 5px;        
+}
+
+.custom-file-label:hover {
+  background-color: #444; 
 }
