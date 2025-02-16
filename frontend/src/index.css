@@ -54,7 +54,7 @@ body {
 }
 
 /* Header and Footer */
-.header, .footer {
+ .footer {
     width: 95%;
     max-width: 1400px;
     padding: 20px;
