@@ -11,6 +11,13 @@ function App() {
         <div>
             <BrowserRouter>
                 <Routes>
+                <Route path="/" 
+                        element={
+                            <PrivateRoute>
+                               <Dashboard/>
+                            </PrivateRoute>
+                        } 
+                    ></Route>
                     <Route path="/dashboard" 
                         element={
                             <PrivateRoute>
