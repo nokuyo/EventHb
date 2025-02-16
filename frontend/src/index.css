@@ -64,15 +64,12 @@ body {
     border-radius: var(--border-radius);
     margin: 20px auto;
     text-align: center;
+    overflow-x: hidden;
 }
 
-/* Mobile Optimization */
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-    }
-    .header, .footer {
-        width: 100%;
-        border-radius: 0;
-    }
-}
+/* Prevent horizontal scrolling */
+html, body {
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    width: 100%; /* Ensure the body takes up the full width of the viewport */
+
+  }

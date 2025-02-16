@@ -1,12 +1,27 @@
-import React from "react";
-import logo from "../assets/Event-Hub.png"; // Import the logo from the assets folder
+import React, { useState } from "react";
+import logo from "../assets/Event-Hub.png"; // Import the logo
 
 function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to track menu visibility
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen); // Toggle the menu open/close state
+  };
+
   return (
     <nav className="navbar">
-      {/* Replace "Event Creator" with the logo */}
+      {/* Logo */}
       <img src={logo} alt="Event Hub Logo" className="logo" />
-      <div className="nav-links">
+
+      {/* Hamburger Menu Icon */}
+      <div className="hamburger-menu" onClick={toggleMenu}>
+        <div className={`bar ${isMenuOpen ? "open" : ""}`}></div>
+        <div className={`bar ${isMenuOpen ? "open" : ""}`}></div>
+        <div className={`bar ${isMenuOpen ? "open" : ""}`}></div>
+      </div>
+
+      {/* Navigation Links */}
+      <div className={`nav-links ${isMenuOpen ? "active" : ""}`}>
         <a href="/">Home</a>
         <a href="/events">Events</a>
         <a href="/profile">Profile</a>
