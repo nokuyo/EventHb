@@ -168,7 +168,7 @@
   .navbar {
     display: flex;
     flex-direction: row; /* Keep items in a row */
-    width: 91.5%;
+    width: 95.3%;
     justify-content: space-between; /* Space out items */
     align-items: center; /* Vertically center items */
     padding: 5px 10px; /* Compact padding */
