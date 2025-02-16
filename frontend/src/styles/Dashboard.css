@@ -3,43 +3,46 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background: linear-gradient(to right, #1e3a8a, #1e40af);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  padding: 10px 20px; /* Reduced padding for a slimmer look */
+  background: linear-gradient(to right, #1e3a8a, #1e40af); /* Gradient background */
+  backdrop-filter: blur(15px); /* Frosted glass effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  border-bottom-left-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
+  border-bottom-left-radius: 16px; /* Rounded corners */
+  border-bottom-right-radius: 16px;
+ 
 }
+
 /* Logo Styling */
 .logo {
-  height: 80px; /* Adjust the height of the logo */
+  height: 50px; /* Smaller logo for a modern look */
   width: auto; /* Maintain aspect ratio */
 }
 
 .navbar h1 {
-  font-size: 24px;
+  font-size: 20px; /* Smaller font size */
   font-weight: bold;
   color: white;
   letter-spacing: 1px;
+  margin: 0; /* Remove default margin */
 }
 
 .nav-links {
   display: flex;
-  gap: 20px;
-  padding-right: 80px;
+  gap: 15px; /* Reduced spacing between links */
+  padding-right: 60px; /* Remove extra padding */
 }
 
 .nav-links a {
   color: white;
   text-decoration: none;
-  font-size: 18px;
-  padding: 10px 15px;
+  font-size: 14px; /* Smaller font size for links */
+  padding: 8px 12px; /* Compact padding */
   transition: all 0.3s ease;
   border-radius: 8px;
 }
@@ -49,14 +52,14 @@
   transform: scale(1.05);
   box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
 }
+
+/* Header Container */
 .header-container {
   display: flex;
   flex-direction: column; /* Stack Navbar and Header vertically */
   align-items: center; /* Center align items horizontally */
-  gap: 20px; /* Add space between Navbar and Header */
-margin: 200px;
-
- 
+  gap: 15px; /* Reduced spacing between Navbar and Header */
+  margin-top: 80px; /* Adjusted margin to account for fixed navbar */
   margin-bottom: 20px; /* Add spacing below the header container */
 }
 /* Header Styling */
