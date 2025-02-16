@@ -31,15 +31,6 @@ function Dashboard() {
       });
   }, []);
 
-<<<<<<< HEAD
-  // Callback to update an event when attendance changes
-  const handleAttendanceUpdate = (updatedEvent) => {
-    setEvents((prevEvents) =>
-      prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
-    );
-  };
-
-=======
   // Helper function to sort events
   const sortEvents = (events, sortBy) => {
     switch (sortBy) {
@@ -66,7 +57,6 @@ function Dashboard() {
   // Apply sorting to the events
   const sortedEvents = sortEvents(events, sortBy);
 
->>>>>>> dashboard-styling
   return (
     <div className="dashboard-container">
       {/* Navbar and Header Container */}

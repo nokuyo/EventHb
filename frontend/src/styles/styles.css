@@ -1,0 +1,62 @@
+.navbar-brand .logo-text {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 25px;
+    font-weight: Bold;
+    color: white;
+    margin-left: 10px;
+  }
+  
+  .navbar .navbar-toggler {
+    background-color: grey !important; 
+    color: white !important; 
+  }
+  
+  .navbar .navbar-toggler:focus{
+    color: #ff4444;
+    }
+  
+  .navbar-nav .nav-link {
+    color: white !important; 
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #ccc !important; 
+  }
+  
+  body {
+    background-color: #121212;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .text-sm .card-text,
+  .text-sm .list-group-item {
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+  }
+  
+  .current-day {
+    font-weight: bold;
+  }
+  
+  .munchies-title {
+    text-indent:70px
+  }
+  
+  .container-custom {
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  .continue-p{
+    font-size: 12px;
+      color: #b2b2b2;
+      font-weight: 600;
+      margin-top: 1rem;
+      text-align: center;
+  
+  }
+  
+  
