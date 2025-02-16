@@ -62,11 +62,15 @@ const EventRegistration = () => {
       <form onSubmit={handleSubmit} className="registration-form">
         <div className="form-group">
           <label>Image:</label>
+          <label htmlFor="file-upload" className="custom-file-label">
+            {image ? image.name : "No file selected"}
+          </label>
           <input
+            id="file-upload"
             type="file"
             accept="image/*"
+            style={{ display: "none" }}
             onChange={(e) => setImage(e.target.files[0])}
-            className="form-input"
           />
         </div>
         <div className="form-group">
