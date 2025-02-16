@@ -5,6 +5,7 @@ import EventRegistration from "./components/EventRegistration.jsx"
 import PrivateRoute from "./components/PrivateRoute.jsx"
 import Signup from "./components/Signup"
 import Login from "./components/Login"
+import UpdateProfile from './components/UpdateProfile';
 
 function App() {
     return (
@@ -22,6 +23,13 @@ function App() {
                         element={
                             <PrivateRoute>
                                 <EventRegistration/>
+                            </PrivateRoute>
+                        }
+                    ></Route>
+                    <Route path="/profile" 
+                        element={
+                            <PrivateRoute>
+                                <UpdateProfile/>
                             </PrivateRoute>
                         }
                     ></Route>

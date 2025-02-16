@@ -31,6 +31,13 @@ function Dashboard() {
       });
   }, []);
 
+  // Callback to update an event when attendance changes
+  const handleAttendanceUpdate = (updatedEvent) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
+    );
+  };
+
   // Helper function to sort events
   const sortEvents = (events, sortBy) => {
     switch (sortBy) {
