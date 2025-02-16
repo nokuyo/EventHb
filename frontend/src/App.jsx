@@ -34,7 +34,6 @@ function App() {
                             </PrivateRoute>
                         }
                     />
-                    {/* New admin route */}
                     <Route 
                         path="/admin" 
                         element={
