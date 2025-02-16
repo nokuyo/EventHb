@@ -1,17 +1,24 @@
+// EventRegistration.jsx
 import React, { useState } from "react";
 import "../styles/EventRegistration.css"; // Import the CSS file
 
 const EventRegistration = () => {
+  // State for each form field
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [eventTime, setEventTime] = useState("");
   const [eventPlace, setEventPlace] = useState("");
   const [estimatedAttendees, setEstimatedAttendees] = useState(0);
+
+  // State for the popup message and whether it's visible
   const [message, setMessage] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Create a FormData object because we're sending an image file.
     const formData = new FormData();
     if (image) {
       formData.append("image", image);
@@ -27,13 +34,16 @@ const EventRegistration = () => {
         method: "POST",
         body: formData,
       });
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      const data = await response.json();
-      setMessage("Event registered successfully!");
 
-      // Reset the form
+      await response.json();
+      setMessage("Event registered successfully!");
+      setShowPopup(true);
+
+      // Optionally reset the form
       setImage(null);
       setTitle("");
       setDescription("");
@@ -42,6 +52,7 @@ const EventRegistration = () => {
       setEstimatedAttendees(0);
     } catch (error) {
       setMessage(`Error: ${error.message}`);
+      setShowPopup(true);
     }
   };
 
@@ -111,7 +122,22 @@ const EventRegistration = () => {
           Register Event
         </button>
       </form>
-      {message && <p className="form-message">{message}</p>}
+
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <p className="form-message">{message}</p>
+            <button
+              onClick={() => {
+                setShowPopup(false);
+                window.location.href = "/";
+              }}
+            >
+              return to Events
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
