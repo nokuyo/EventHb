@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    .dashboard-container { display: flex; flex-direction: column; min-height: 100vh; }
+    .header-container { background: #d4c9c9; padding: 10px; }
+    
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      padding: 0px 10px;
+      background-color: #3498db; 
+    }
+    .navbar .logo { height: 40px; }
+    .hamburger-menu {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 25px;
+      height: 25px;
+    }
+    .hamburger-menu .bar {
+      height: 3px;
+      width: 100%;
+      background-color: #efefef;
+      transition: all 0.3s ease;
+    }
+    .nav-links {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 50px;
+      right: 10px;
+      background: #dcdbdb;
+      padding: 10px;
+      border: 1px solid #434141;
+    }
+    .nav-links.active { display: flex; }
+    .nav-links a { text-decoration: none; color: #333; margin: 5px 0; }
+    
+
+    .header { text-align: center; }
+    
+
+    .content { flex: 1; padding: 20px; }
+    .register-event-link {
+      text-decoration: none;
+      background: #007BFF;
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+    .event-section-title { text-align: center; }
+    
+    .event-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .event-card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      width: 300px;
+    }
+    .event-image { max-width: 100%; display: block; margin-bottom: 10px; }
+
+    .footer { background: #f4f4f4; text-align: center; padding: 10px; }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="header-container">
+      <nav class="navbar">
+        <img src="assets/Event-Hub.png" alt="Event Hub Logo" class="logo" />
+        <div class="hamburger-menu" id="hamburger-menu">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <div class="nav-links" id="nav-links">
+          <a href="/">Home</a>
+          <a href="myevents.html">My Events</a>
+          <a href="profile.html">Profile</a>
+          <a href="admin.html">User Management</a>
+        </div>
+      </nav>
+      <header class="header">
+        <h1>Dashboard</h1>
+      </header>
+    </div>
+
+    <main class="content">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <a href="event-registration.html" class="register-event-link">
+          Register a New Event
+        </a>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 20px;">
+        <label for="sort-by">Sort By:</label>
+        <select id="sort-by">
+          <option value="upcoming">Upcoming Events</option>
+          <option value="closest">Closest Event</option>
+          <option value="most_active">Most Active</option>
+        </select>
+      </div>
+
+      <h2 class="event-section-title">Nearby Events</h2>
+      <div id="events-container" class="event-list">
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 EventHub. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    const hamburger = document.getElementById("hamburger-menu");
+    const navLinks = document.getElementById("nav-links");
+
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+    const events = [
+      {
+        id: 1,
+        title: "Community Gathering",
+        image: "assets/event1.png", 
+        description: "Join us for a community gathering in the park.",
+        host: "John Doe",
+        time: "2025-03-05T14:00:00",
+        place: "Central Park, NY",
+        attendees: 150
+      },
+      {
+        id: 2,
+        title: "Tech Meetup",
+        image: "assets/event2.png",
+        description: "A meetup for technology enthusiasts.",
+        host: "Tech Group",
+        time: "2025-03-10T18:30:00",
+        place: "Tech Hub, SF",
+        attendees: 200
+      }
+    ];
+
+    function sortEvents(events, sortBy) {
+      const now = new Date();
+      switch (sortBy) {
+        case "upcoming":
+          return events
+            .filter(event => new Date(event.time) > now)
+            .sort((a, b) => new Date(a.time) - new Date(b.time));
+        case "closest":
+          return events.slice().sort((a, b) =>
+            Math.abs(new Date(a.time) - now) - Math.abs(new Date(b.time) - now)
+          );
+        case "most_active":
+          return events.slice().sort((a, b) => b.attendees - a.attendees);
+        default:
+          return events;
+      }
+    }
+    function createEventCard(event) {
+      const card = document.createElement("div");
+      card.className = "event-card";
+      card.innerHTML = `
+        <img src="${event.image}" alt="${event.title}" class="event-image" />
+        <h2>${event.title}</h2>
+        <p><strong>Host:</strong> ${event.host}</p>
+        <p>${event.description}</p>
+        <p><strong>Time & Place:</strong> ${new Date(event.time).toLocaleString()}, ${event.place}</p>
+        <p><strong>Attendees:</strong> ${event.attendees} people</p>
+      `;
+      return card;
+    }
+    function renderEvents() {
+      const sortBy = document.getElementById("sort-by").value;
+      const sortedEvents = sortEvents(events, sortBy);
+      const container = document.getElementById("events-container");
+      container.innerHTML = "";
+
+      if (sortedEvents.length === 0) {
+        container.innerHTML = "<p>No events available.</p>";
+        return;
+      }
+
+      sortedEvents.forEach(event => {
+        const card = createEventCard(event);
+        container.appendChild(card);
+      });
+    }
+    document.getElementById("sort-by").addEventListener("change", renderEvents);
+
+    renderEvents();
+  </script>
+</body>
+</html>

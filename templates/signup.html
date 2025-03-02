@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  />
+  <style>
+    body {
+      background-color: #343a40;
+    }
+    .container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      margin-top: 20px;
+    }
+    .google-signin img {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="w-100" style="max-width: 400px;">
+      <div class="d-flex align-items-center justify-content-center mb-3">
+        <img src="templates/assets/Event-Hub.png" alt="logo" style="margin-right: 10px; margin-top: -9px; max-height: 50px;" />
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h2 class="text-center mb-4">Sign Up</h2>
+          <div id="errorMessage" class="alert alert-danger" style="display: none;"></div>
+          <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+          <form id="signupForm">
+            <div class="form-group" id="usernameGroup">
+              <label for="usernameInput">Username</label>
+              <input type="text" class="form-control" id="usernameInput" required />
+            </div>
+            <div class="form-group" id="emailGroup">
+              <label for="emailInput">Email</label>
+              <input type="email" class="form-control" id="emailInput" required />
+            </div>
+            <div class="form-group" id="passwordGroup">
+              <label for="passwordInput">Password</label>
+              <input type="password" class="form-control" id="passwordInput" required />
+            </div>
+            <div class="form-group" id="passwordConfirmGroup">
+              <label for="passwordConfirmInput">Password Confirmation</label>
+              <input type="password" class="form-control" id="passwordConfirmInput" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+          </form>
+          <div class="google-signin d-flex justify-content-center mt-3">
+            <img src="assets/google.png" width="80%" alt="Google Sign-In" id="googleSignIn" />
+          </div>
+        </div>
+      </div>
+      <div style="color: white;" class="w-100 text-center mt-2">
+        Already have an account? <a href="login.html" style="color: #ffc107;">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showMessage(elementId, message) {
+      const el = document.getElementById(elementId);
+      el.textContent = message;
+      el.style.display = "block";
+    }
+
+    function clearMessages() {
+      document.getElementById("errorMessage").style.display = "none";
+      document.getElementById("successMessage").style.display = "none";
+    }
+
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      clearMessages();
+
+      const username = document.getElementById("usernameInput").value.trim();
+      const email = document.getElementById("emailInput").value.trim();
+      const password = document.getElementById("passwordInput").value;
+      const passwordConfirm = document.getElementById("passwordConfirmInput").value;
+
+      if (!username) {
+        showMessage("errorMessage", "Username is required!");
+        return;
+      }
+      if (password !== passwordConfirm) {
+        showMessage("errorMessage", "Passwords do not match!");
+        return;
+      }
+      showMessage("successMessage", "Sign up successful! Please check your email for a verification link before logging in.");
+
+      setTimeout(function() {
+        window.location.href = "login.html";
+      }, 1500);
+    });
+
+    document.getElementById("googleSignIn").addEventListener("click", function() {
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

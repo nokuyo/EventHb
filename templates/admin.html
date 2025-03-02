@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #333;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    .login-form {
+      max-width: 400px;
+      margin: 0 auto 30px;
+      padding: 20px;
+      background: #eee;
+      border-radius: 5px;
+    }
+    .login-form h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+    .login-form input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    .login-form button {
+      width: 100%;
+      padding: 10px;
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      background: #ddd;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section h2 {
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    .action-btn {
+      margin-right: 5px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      color: #fff;
+    }
+    .blacklist {
+      background: #e74c3c;
+    }
+    .warn {
+      background: #f1c40f;
+    }
+    .unban {
+      background: #2ecc71;
+    }
+    .remove {
+      background: #e74c3c;
+    }
+    .approve {
+      background: #2ecc71;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .note {
+      font-style: italic;
+      margin-top: 10px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Admin Dashboard</h1>
+  </header>
+
+    <nav>
+      <a href="#user-management">User Management</a>
+      <a href="#reported-events">Reported Events</a>
+    </nav>
+
+    <div id="user-management" class="section">
+      <h2>User Management</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>101</td>
+            <td>John Doe</td>
+            <td>john@example.com</td>
+            <td>
+              <button class="action-btn blacklist">Blacklist</button>
+              <button class="action-btn warn">Warn</button>
+              <button class="action-btn unban">Unban</button>
+            </td>
+          </tr>
+          <tr>
+            <td>102</td>
+            <td>Jane Smith</td>
+            <td>jane@example.com</td>
+            <td>
+              <button class="action-btn blacklist">Blacklist</button>
+              <button class="action-btn warn">Warn</button>
+              <button class="action-btn unban">Unban</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="error" style="display:none;">Error: Invalid user selected.</div>
+      <div class="note">
+        Note: Actions will update the Django backend accordingly. If the backend is unreachable, actions cannot be performed.
+      </div>
+    </div>
+
+    <div id="reported-events" class="section">
+      <h2>Reported Events</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Event ID</th>
+            <th>Title</th>
+            <th>Reported By</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>201</td>
+            <td>Community Gathering</td>
+            <td>user123</td>
+            <td>
+              <button class="action-btn remove">Remove</button>
+              <button class="action-btn approve">Approve</button>
+            </td>
+          </tr>
+          <tr>
+            <td>202</td>
+            <td>Tech Meetup</td>
+            <td>user456</td>
+            <td>
+              <button class="action-btn remove">Remove</button>
+              <button class="action-btn approve">Approve</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">
+        Note: The Django backend updates the database accordingly. If the backend is unreachable, no actions can be performed.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
