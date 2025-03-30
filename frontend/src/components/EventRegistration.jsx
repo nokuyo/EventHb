@@ -30,7 +30,7 @@ const EventRegistration = () => {
     formData.append("estimated_attendees", estimatedAttendees);
 
     try {
-      const response = await fetch("http://localhost:8000/api/events/", {
+      const response = await fetch("http://localhost:8000/events/", {
         method: "POST",
         body: formData,
       });

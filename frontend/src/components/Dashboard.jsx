@@ -12,9 +12,9 @@ function Dashboard() {
   const [error, setError] = useState(null);
   const [sortBy, setSortBy] = useState("upcoming"); // Sorting criteria
 
-  // Fetch events from the Django backend
   useEffect(() => {
-    fetch("http://localhost:8000/api/event_list_view/")
+    fetch("http://localhost:8000/events/")
+
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
