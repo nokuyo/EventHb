@@ -1,28 +1,32 @@
-# Ignore the virtual environment folder
+# Ignore Python virtual environment
 venv/
-# If you're using a different name for your virtual environment, replace `venv/` with that name (e.g., `env/`).
+env/
+ENV/
 
-# Ignore Python compiled files
+# Node.js dependencies
+node_modules/
+
+# Python compiled files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Ignore IDE/editor-specific files
+# IDE/editor-specific files
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
 
-# Ignore log files and databases
+# Log files and local SQLite databases
 *.log
 *.sqlite3
 
-# Ignore environment variables file
+# Environment variable files
 .env
 .env.local
 
-# Ignore distribution/build files
+# Distribution/build files
 dist/
 build/
 *.egg-info/

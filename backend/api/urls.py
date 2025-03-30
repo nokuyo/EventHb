@@ -1,10 +1,12 @@
 from django.urls import path, include
-from api import views
 from rest_framework.routers import DefaultRouter
+from .views import EventViewSet, UserViewSet, UserProfileViewSet
 
 router = DefaultRouter()
-router.register(r'events', views.EventViewSet, basename='event')
+router.register(r'events', EventViewSet)
+router.register(r'users', UserViewSet)
+router.register(r'userprofiles', UserProfileViewSet)
+
 urlpatterns = [
-    path('api/event_list_view/', views.event_list_view, name='event_fetch'),
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
 ]
