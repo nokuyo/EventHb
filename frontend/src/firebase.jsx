@@ -6,12 +6,12 @@ import { GoogleAuthProvider, getAuth } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBkgcROZtI_8JjKUh1k6IodiWV3LRVWa2w",
-  authDomain: "hackathon2025-a31e3.firebaseapp.com",
-  projectId: "hackathon2025-a31e3",
-  storageBucket: "hackathon2025-a31e3.firebasestorage.app",
-  messagingSenderId: "393826157235",
-  appId: "1:393826157235:web:9624d43051ab8edb6b26c6"
+  apiKey: "AIzaSyD1m2fnPK3GgyLpkMQJYpQUGPGzXaGjSSg",
+  authDomain: "eventhub-be80d.firebaseapp.com",
+  projectId: "eventhub-be80d",
+  storageBucket: "eventhub-be80d.firebasestorage.app",
+  messagingSenderId: "346619814388",
+  appId: "1:346619814388:web:b456cde60c0e938d0c99a1"
 };
 
 // Initialize Firebase

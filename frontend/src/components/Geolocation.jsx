@@ -1,4 +1,6 @@
+// GeolocationComponent.jsx
 import React, { useState, useEffect } from "react";
+import axiosInstance from "../AxiosIntercept"; // Import the Axios instance with the interceptor
 
 const GeolocationComponent = ({ address, eventId, estimatedAttendees, onAttendanceUpdate }) => {
   const [locationJSON, setLocationJSON] = useState("");
@@ -91,16 +93,10 @@ const GeolocationComponent = ({ address, eventId, estimatedAttendees, onAttendan
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/api/events/${eventId}/attend/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const updatedEvent = await response.json();
+      // Use axiosInstance to send the attendance POST request.
+      // The interceptor will automatically attach the Firebase token.
+      const response = await axiosInstance.post(`/event_list_view/${eventId}/attend/`);
+      const updatedEvent = response.data;
       if (onAttendanceUpdate) {
         onAttendanceUpdate(updatedEvent);
       }

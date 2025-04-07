@@ -5,6 +5,7 @@ import Navbar from "./Navbar.jsx";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 import "../styles/Dashboard.css"; // Ensure this CSS file exists
+import axiosInstance from "../AxiosIntercept"; 
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
@@ -13,16 +14,11 @@ function Dashboard() {
   const [sortBy, setSortBy] = useState("upcoming"); // Sorting criteria
 
   useEffect(() => {
-    fetch("http://localhost:8000/events/")
-
+    // Using axiosInstance which automatically attaches the Firebase token
+    axiosInstance
+      .get("/event_list_view/") // Make sure this endpoint aligns with your backend routing
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((json) => {
-        setEvents(json);
+        setEvents(response.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -107,7 +103,11 @@ function Dashboard() {
                 <h3>{event.title}</h3>
                 {event.image && (
                   <img
-                    src={`http://localhost:8000${event.image}`}
+                    src={
+                      event.image.startsWith("http")
+                        ? event.image
+                        : `/media/event_images/${event.image}`
+                    }
                     alt={event.title}
                     style={{ maxWidth: "300px", display: "block" }}
                   />
@@ -128,13 +128,13 @@ function Dashboard() {
                 </p>
                 <p>
                   <strong>Proximity:</strong>{" "}
-                    {/* Pass the unique event data to GeolocationComponent */}
-                    <GeolocationComponent 
-                      address={event.event_place} 
-                      eventId={event.id} 
-                      estimatedAttendees={event.estimated_attendees}
-                      onAttendanceUpdate={handleAttendanceUpdate}
-                    />
+                  {/* Pass the unique event data to GeolocationComponent */}
+                  <GeolocationComponent 
+                    address={event.event_place} 
+                    eventId={event.id} 
+                    estimatedAttendees={event.estimated_attendees}
+                    onAttendanceUpdate={handleAttendanceUpdate}
+                  />
                 </p>
               </div>
             ))}

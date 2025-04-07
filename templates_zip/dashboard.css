@@ -1,0 +1,68 @@
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+.dashboard-container { display: flex; flex-direction: column; min-height: 100vh; }
+.header-container { background: #d4c9c9; padding: 10px; }
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 0px 10px;
+  background-color: #3498db; 
+}
+.navbar .logo { height: 40px; }
+.hamburger-menu {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 25px;
+  height: 25px;
+}
+.hamburger-menu .bar {
+  height: 3px;
+  width: 100%;
+  background-color: #efefef;
+  transition: all 0.3s ease;
+}
+.nav-links {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background: #dcdbdb;
+  padding: 10px;
+  border: 1px solid #434141;
+}
+.nav-links.active { display: flex; }
+.nav-links a { text-decoration: none; color: #333; margin: 5px 0; }
+
+
+.header { text-align: center; }
+
+
+.content { flex: 1; padding: 20px; }
+.register-event-link {
+  text-decoration: none;
+  background: #007BFF;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+.event-section-title { text-align: center; }
+
+.event-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.event-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  width: 300px;
+}
+.event-image { max-width: 100%; display: block; margin-bottom: 10px; }
+
+.footer { background: #f4f4f4; text-align: center; padding: 10px; }

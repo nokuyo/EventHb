@@ -12,6 +12,18 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os 
+# firebase_utils.py
+import firebase_admin
+from firebase_admin import credentials
+
+# Delete the existing default app if it exists
+if firebase_admin._apps:
+    firebase_admin.delete_app(firebase_admin.get_app())
+
+# Reinitialize with the new service account JSON file
+cred = credentials.Certificate("./eventhub-be80d-firebase-adminsdk-fbsvc-c941cbd8fb.json")
+print(cred)
+firebase_admin.initialize_app(cred)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +55,16 @@ INSTALLED_APPS = [
     'api',
 ]
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'api.authentication.FirebaseAuthentication',
+#     ),
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+# }
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -52,12 +74,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Or wherever your React app runs
-]
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
@@ -108,7 +126,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -137,5 +154,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173"
+# ]
 CORS_ALLOW_ALL_ORIGINS = True

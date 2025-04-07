@@ -1,5 +1,6 @@
 // EventRegistration.jsx
 import React, { useState } from "react";
+import axiosInstance from "../AxiosIntercept"; // Import the Axios instance with the interceptor
 import "../styles/EventRegistration.css"; // Import the CSS file
 
 const EventRegistration = () => {
@@ -30,16 +31,9 @@ const EventRegistration = () => {
     formData.append("estimated_attendees", estimatedAttendees);
 
     try {
-      const response = await fetch("http://localhost:8000/events/", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      await response.json();
+      // Use axiosInstance to post the form data
+      const response = await axiosInstance.post("/event_list_view/", formData);
+      // Optionally, you can process response.data if needed
       setMessage("Event registered successfully!");
       setShowPopup(true);
 
@@ -137,7 +131,7 @@ const EventRegistration = () => {
                 window.location.href = "/";
               }}
             >
-              return to Events
+              Return to Events
             </button>
           </div>
         </div>
