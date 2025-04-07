@@ -23,7 +23,7 @@ function Navbar() {
 
       {/* Navigation Links */}
       <div className={`nav-links ${isMenuOpen ? "active" : ""}`}>
-        <a href="/">Home</a>
+        <a href="/dashboard">Home</a>
         <a href="/user-events">My Events</a>
         <Link to="/profile">Profile</Link>
       </div>
