@@ -23,6 +23,22 @@ const UserEvents = () => {
       });
   }, []);
 
+  // Handler to delete an event
+  const handleDeleteEvent = (eventId) => {
+    axiosInstance
+      .delete(`/events/${eventId}/`)
+      .then(() => {
+        // Remove the deleted event from state
+        setEvents((prevEvents) =>
+          prevEvents.filter((event) => event.id !== eventId)
+        );
+      })
+      .catch((err) => {
+        console.error("Error deleting event:", err);
+        setError(err.message);
+      });
+  };
+
   return (
     <div className="user-events-container">
       <Navbar />
@@ -61,10 +77,21 @@ const UserEvents = () => {
                   <strong>Attendees:</strong> {event.estimated_attendees}
                 </p>
                 <div style={{ textAlign: "center", marginTop: "10px" }}>
-                  {/* Button to navigate to the edit page for this event */}
-                  <Link to={`/edit-event/${event.id}`} className="edit-event-button">
+                  {/* Edit button navigates to the edit page */}
+                  <Link
+                    to={`/edit-event/${event.id}`}
+                    className="edit-event-button"
+                  >
                     Edit Event
                   </Link>
+                  {/* Delete button */}
+                  <button
+                    onClick={() => handleDeleteEvent(event.id)}
+                    className="delete-event-button"
+                    style={{ marginLeft: "10px" }}
+                  >
+                    Delete Event
+                  </button>
                 </div>
               </div>
             ))}
