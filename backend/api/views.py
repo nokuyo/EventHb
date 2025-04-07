@@ -10,10 +10,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import Event, UserProfile
 from .serializers import EventSerializer
-
+from .authentication import FirebaseAuthentication
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
+    authentication_classes = [FirebaseAuthentication]
     serializer_class = EventSerializer
     permission_classes = [IsAuthenticated]  # or just [IsAuthenticated] if you wish
 
@@ -39,7 +40,7 @@ from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 
 from .models import Event
 from .serializers import EventSerializer
-from .authentication import FirebaseAuthentication
+
 
 class EventListView(APIView):
     authentication_classes = [FirebaseAuthentication]

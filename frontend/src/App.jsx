@@ -7,6 +7,8 @@ import Signup from "./components/Signup"
 import Login from "./components/Login"
 import UpdateProfile from './components/UpdateProfile';
 import Admin from "./components/admin"
+import UserEvents from "./components/UserEvents";
+import EditEvent from "./components/EditEvent";
 
 function App() {
     return (
@@ -32,6 +34,22 @@ function App() {
                         element={
                             <PrivateRoute>
                                 <UpdateProfile />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route 
+                        path="/user-events"
+                        element={
+                            <PrivateRoute>
+                                <UserEvents/>
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route 
+                        path="/edit-event/:id"
+                        element={
+                            <PrivateRoute>
+                                <EditEvent/>
                             </PrivateRoute>
                         }
                     />

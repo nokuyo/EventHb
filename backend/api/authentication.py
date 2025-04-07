@@ -6,10 +6,12 @@ from .models import UserProfile
 
 class FirebaseAuthentication(BaseAuthentication):
     def authenticate(self, request):
+        print("bruh")
         # Retrieve the Firebase token from the request (Authorization header or wherever it might be)
         id_token = self._get_token_from_request(request)
         print(id_token)
         if not id_token:
+            print("bruh")
             return None  # No token, so no authentication
 
         # Verify the token

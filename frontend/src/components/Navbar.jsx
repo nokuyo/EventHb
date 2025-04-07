@@ -24,7 +24,7 @@ function Navbar() {
       {/* Navigation Links */}
       <div className={`nav-links ${isMenuOpen ? "active" : ""}`}>
         <a href="/">Home</a>
-        <a href="/events">Events</a>
+        <a href="/user-events">My Events</a>
         <Link to="/profile">Profile</Link>
       </div>
     </nav>

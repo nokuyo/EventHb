@@ -21,8 +21,7 @@ if firebase_admin._apps:
     firebase_admin.delete_app(firebase_admin.get_app())
 
 # Reinitialize with the new service account JSON file
-cred = credentials.Certificate("./eventhub-be80d-firebase-adminsdk-fbsvc-c941cbd8fb.json")
-print(cred)
+cred = credentials.Certificate("./eventhub-be80d-firebase-adminsdk-fbsvc-cd72fbd0c0.json")
 firebase_admin.initialize_app(cred)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

@@ -6,6 +6,7 @@ import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 import "../styles/Dashboard.css"; // Ensure this CSS file exists
 import axiosInstance from "../AxiosIntercept"; 
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
