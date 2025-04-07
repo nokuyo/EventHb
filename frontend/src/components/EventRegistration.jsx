@@ -128,7 +128,7 @@ const EventRegistration = () => {
             <button
               onClick={() => {
                 setShowPopup(false);
-                window.location.href = "/";
+                window.location.href = "/dashboard";
               }}
             >
               Return to Events
