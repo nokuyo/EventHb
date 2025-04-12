@@ -2,17 +2,22 @@
 from django.db import models
 from django.contrib.auth.models import User  # Optional: if you want to tie UserProfile to Django's User
 
-# User Profile Model
 class UserProfile(models.Model):
-    # Option 1: If you want to tie the profile to Django's User model
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    
-    # Profile name and email (email can be redundant if using User.email)
     profile_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
+    
+    # 🎮 XP Field (New)
+    # COmment
+    xp = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.profile_name
+
+    # Optional helper method
+    def level(self):
+        return self.xp // 500  
+
 
 class Event(models.Model):
     image = models.ImageField(upload_to='event_images/')

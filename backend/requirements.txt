@@ -24,7 +24,7 @@ grpcio-status==1.71.0
 httplib2==0.22.0
 idna==3.10
 msgpack==1.1.0
-pillow==11.1.0
+pillow==11.2.1
 proto-plus==1.26.1
 protobuf==5.29.4
 pyasn1==0.6.1
@@ -37,4 +37,4 @@ rsa==4.9
 sqlparse==0.5.3
 tzdata==2025.1
 uritemplate==4.1.1
-urllib3==2.3.0
+urllib3==2.4.0

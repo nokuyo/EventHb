@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link } from "react-router-dom";
 import GeolocationComponent from "./Geolocation.jsx";
 import Navbar from "./Navbar.jsx";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
-import "../styles/Dashboard.css"; // Ensure this CSS file exists
-import axiosInstance from "../AxiosIntercept"; 
+import "../styles/Dashboard.css";
+import axiosInstance from "../AxiosIntercept";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sortBy, setSortBy] = useState("upcoming"); // Sorting criteria
+  const [sortBy, setSortBy] = useState("upcoming");
+  const [attendanceMessage, setAttendanceMessage] = useState("");
 
   useEffect(() => {
-    // Using axiosInstance which automatically attaches the Firebase token
     axiosInstance
-      .get("/event_list_view/") // Make sure this endpoint aligns with your backend routing
+      .get("/event_list_view/")
       .then((response) => {
         setEvents(response.data);
         setLoading(false);
@@ -28,56 +28,64 @@ function Dashboard() {
       });
   }, []);
 
-  // Callback to update an event when attendance changes
   const handleAttendanceUpdate = (updatedEvent) => {
     setEvents((prevEvents) =>
       prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
     );
+
+    // ✅ Show a quick feedback message
+    setAttendanceMessage(`✅ Marked attendance for: ${updatedEvent.title}`);
+    setTimeout(() => setAttendanceMessage(""), 3000);
   };
 
-  // Helper function to sort events
   const sortEvents = (events, sortBy) => {
+    const cloned = [...events];
     switch (sortBy) {
       case "upcoming":
-        // Sort by event time in ascending order (future events first)
-        return events
-          .filter(event => new Date(event.event_time) > new Date())
+        return cloned
+          .filter((event) => new Date(event.event_time) > new Date())
           .sort((a, b) => new Date(a.event_time) - new Date(b.event_time));
       case "closest":
-        // Sort by proximity to the current time
-        return events.sort(
+        return cloned.sort(
           (a, b) =>
             Math.abs(new Date(a.event_time) - new Date()) -
             Math.abs(new Date(b.event_time) - new Date())
         );
       case "most_active":
-        // Sort by estimated attendees in descending order
-        return events.sort((a, b) => b.estimated_attendees - a.estimated_attendees);
+        return cloned.sort(
+          (a, b) => b.estimated_attendees - a.estimated_attendees
+        );
       default:
-        return events;
+        return cloned;
     }
   };
 
-  // Apply sorting to the events
   const sortedEvents = sortEvents(events, sortBy);
 
   return (
     <div className="dashboard-container">
-      {/* Navbar and Header Container */}
+      {/* Navbar + Header */}
       <div className="header-container">
         <Navbar />
         <Header />
       </div>
 
       <main className="content">
-        {/* Add a link to the Event Registration page */}
+        {/* ✅ Attendance Toast */}
+        {attendanceMessage && (
+          <div className="attendance-toast">
+            <p>{attendanceMessage}</p>
+          </div>
+        )}
+
+        {/* Register New Event */}
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <Link to="/event-registration" className="register-event-link">
             Register a New Event
           </Link>
         </div>
 
-        {/* Sorting Dropdown */}
+        {/* Sorting Options */}
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <label htmlFor="sort-by">Sort By:</label>
           <select
@@ -97,6 +105,7 @@ function Dashboard() {
         {!loading && !error && sortedEvents.length === 0 && (
           <p>No events available.</p>
         )}
+
         {!loading && !error && sortedEvents.length > 0 && (
           <div className="event-list">
             {sortedEvents.map((event) => (
@@ -129,10 +138,9 @@ function Dashboard() {
                 </p>
                 <p>
                   <strong>Proximity:</strong>{" "}
-                  {/* Pass the unique event data to GeolocationComponent */}
-                  <GeolocationComponent 
-                    address={event.event_place} 
-                    eventId={event.id} 
+                  <GeolocationComponent
+                    address={event.event_place}
+                    eventId={event.id}
                     estimatedAttendees={event.estimated_attendees}
                     onAttendanceUpdate={handleAttendanceUpdate}
                   />

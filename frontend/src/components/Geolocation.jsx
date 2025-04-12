@@ -1,8 +1,12 @@
-// GeolocationComponent.jsx
 import React, { useState, useEffect } from "react";
-import axiosInstance from "../AxiosIntercept"; // Import the Axios instance with the interceptor
+import axiosInstance from "../AxiosIntercept"; // Axios instance with Firebase token interceptor
 
-const GeolocationComponent = ({ address, eventId, estimatedAttendees, onAttendanceUpdate }) => {
+const GeolocationComponent = ({
+  address,
+  eventId,
+  estimatedAttendees,
+  onAttendanceUpdate,
+}) => {
   const [locationJSON, setLocationJSON] = useState("");
   const [distance, setDistance] = useState(null);
   const [error, setError] = useState(null);
@@ -10,15 +14,15 @@ const GeolocationComponent = ({ address, eventId, estimatedAttendees, onAttendan
   const [hasAttended, setHasAttended] = useState(false); // Track attendance
 
   useEffect(() => {
-    // Ensure localStorage has a valid entry for this event
     if (eventId && localStorage.getItem(`attended_${eventId}`)) {
       setHasAttended(true);
     }
   }, [eventId]);
 
-  // Function to geocode an address using the Nominatim API
   const geocodeAddress = async (address) => {
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+      address
+    )}`;
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -34,17 +38,14 @@ const GeolocationComponent = ({ address, eventId, estimatedAttendees, onAttendan
     }
   };
 
-  // Haversine formula to calculate distance between two coordinates (in km)
   const haversineDistance = (lat1, lon1, lat2, lon2) => {
     const toRad = (value) => (value * Math.PI) / 180;
-    const R = 6371; // Earth's radius in kilometers
+    const R = 6371;
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon2 - lon1);
     const a =
       Math.sin(dLat / 2) ** 2 +
-      Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) ** 2;
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
   };
@@ -54,13 +55,10 @@ const GeolocationComponent = ({ address, eventId, estimatedAttendees, onAttendan
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          const locationData = { latitude, longitude };
-          setLocationJSON(JSON.stringify(locationData));
-          console.log("User Location JSON:", locationData);
+          setLocationJSON(JSON.stringify({ latitude, longitude }));
 
           try {
             const addressCoords = await geocodeAddress(address);
-            console.log("Address Coordinates:", addressCoords);
             const calculatedDistance = haversineDistance(
               latitude,
               longitude,
@@ -68,7 +66,6 @@ const GeolocationComponent = ({ address, eventId, estimatedAttendees, onAttendan
               addressCoords.longitude
             );
             setDistance(calculatedDistance);
-            console.log(`Distance to ${address}: ${calculatedDistance.toFixed(2)} km`);
           } catch (err) {
             console.error("Error processing address:", err);
             setError("Error geocoding address or calculating distance.");
@@ -83,8 +80,7 @@ const GeolocationComponent = ({ address, eventId, estimatedAttendees, onAttendan
     }
   }, [address]);
 
-  // Define a threshold distance (in km) for the notification
-  const thresholdDistance = 1;
+  const thresholdDistance = 1; // km
 
   const handleAttend = async () => {
     if (hasAttended) {
@@ -93,18 +89,21 @@ const GeolocationComponent = ({ address, eventId, estimatedAttendees, onAttendan
     }
 
     try {
-      // Use axiosInstance to send the attendance POST request.
-      // The interceptor will automatically attach the Firebase token.
-      const response = await axiosInstance.post(`/event_list_view/${eventId}/attend/`);
+      const response = await axiosInstance.post(`/event_list_view/`, {
+        event_id: eventId,
+        increment: 1,
+      });
+
       const updatedEvent = response.data;
       if (onAttendanceUpdate) {
         onAttendanceUpdate(updatedEvent);
       }
+
       setUpdateMessage("Attendance updated!");
       setHasAttended(true);
       localStorage.setItem(`attended_${eventId}`, "true");
     } catch (error) {
-      console.error("Error updating event:", error);
+      console.error("Error updating attendance:", error);
       setUpdateMessage("Error updating attendance.");
     }
   };
