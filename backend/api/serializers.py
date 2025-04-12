@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Event, UserProfile
 
-# 🎯 Event Serializer (now includes host)
+# 🎯 Event Serializer (includes host as read-only)
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
@@ -13,8 +13,9 @@ class EventSerializer(serializers.ModelSerializer):
             'event_time',
             'event_place',
             'estimated_attendees',
-            'host'  # ✅ Add this!
+            'host'
         ]
+        read_only_fields = ['host']  # ✅ Prevent frontend from supplying this directly
 
 
 # 🎮 UserProfile Serializer for XP and profile data

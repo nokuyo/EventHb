@@ -10,7 +10,7 @@ from .serializers import EventSerializer, UserProfileSerializer
 from .authentication import FirebaseAuthentication
 
 
-# 🎯 ModelViewSet for basic CRUD + user-specific events
+# 🎯 CRUD + user-specific events
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
@@ -19,18 +19,17 @@ class EventViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user_profile = self.request.user.userprofile
-        # 🔧 Fix: Save profile_name string to CharField
         serializer.save(host=user_profile.profile_name)
 
     @action(detail=False, methods=['get'], url_path='my-events')
     def my_events(self, request):
         user_profile = request.user.userprofile
-        user_events = Event.objects.filter(host=user_profile.profile_name)  # 🔧 match against CharField
+        user_events = Event.objects.filter(host=user_profile.profile_name)
         serializer = self.get_serializer(user_events, many=True)
         return Response(serializer.data)
 
 
-# 🌱 APIView for custom GET/POST logic and XP handling
+# 🌱 Custom GET/POST for all events + XP gain
 class EventListView(APIView):
     authentication_classes = [FirebaseAuthentication]
     permission_classes = [IsAuthenticated]
@@ -43,7 +42,7 @@ class EventListView(APIView):
             events_data.append({
                 'id': event.id,
                 'image': request.build_absolute_uri(event.image.url) if event.image else None,
-                'host': event.host,  # 🔧 already a string (CharField)
+                'host': event.host,
                 'title': event.title,
                 'description': event.description,
                 'event_time': event.event_time.isoformat(),
@@ -55,10 +54,16 @@ class EventListView(APIView):
     def post(self, request, format=None):
         user_profile = request.user.userprofile
 
-        # 1️⃣ User is attending an event
+        # 🪵 Log incoming POST request
+        print("📥 Incoming POST data:", request.data)
+
+        # Attendance logic
         if 'event_id' in request.data:
-            event_id = request.data['event_id']
-            increment = int(request.data.get('increment', 1))
+            try:
+                event_id = int(request.data['event_id'])
+                increment = int(request.data.get('increment', 1))
+            except (KeyError, ValueError, TypeError) as e:
+                return Response({'error': f'Invalid parameters: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
 
             try:
                 event = Event.objects.get(id=event_id)
@@ -68,29 +73,24 @@ class EventListView(APIView):
             event.estimated_attendees += increment
             event.save()
 
-            # 🎮 Grant XP for attending
             user_profile.xp += 25
             user_profile.save()
 
             serializer = EventSerializer(event)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
-        # 2️⃣ User is creating an event
+        # Creation logic
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
-            # 🔧 Fix: Save profile_name string to host field
             serializer.save(host=user_profile.profile_name)
-
-            # 🎮 Grant XP for creating an event
             user_profile.xp += 50
             user_profile.save()
-
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# 🧑‍💻 APIView for profile data (for frontend XP/profile fetch)
+# 👤 View to fetch user XP, email, etc.
 class UserProfileView(APIView):
     authentication_classes = [FirebaseAuthentication]
     permission_classes = [IsAuthenticated]

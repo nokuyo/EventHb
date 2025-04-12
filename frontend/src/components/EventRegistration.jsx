@@ -1,10 +1,8 @@
-// EventRegistration.jsx
 import React, { useState } from "react";
-import axiosInstance from "../AxiosIntercept"; // Import the Axios instance with the interceptor
-import "../styles/EventRegistration.css"; // Import the CSS file
+import axiosInstance from "../AxiosIntercept";
+import "../styles/EventRegistration.css";
 
 const EventRegistration = () => {
-  // State for each form field
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -12,32 +10,29 @@ const EventRegistration = () => {
   const [eventPlace, setEventPlace] = useState("");
   const [estimatedAttendees, setEstimatedAttendees] = useState(0);
 
-  // State for the popup message and whether it's visible
   const [message, setMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create a FormData object because we're sending an image file.
     const formData = new FormData();
     if (image) {
       formData.append("image", image);
     }
-    formData.append("title", title);
-    formData.append("description", description);
+    formData.append("title", title.trim());
+    formData.append("description", description.trim());
     formData.append("event_time", eventTime);
-    formData.append("event_place", eventPlace);
-    formData.append("estimated_attendees", estimatedAttendees);
+    formData.append("event_place", eventPlace.trim());
+    formData.append("estimated_attendees", parseInt(estimatedAttendees, 10));
 
     try {
-      // Use axiosInstance to post the form data
       const response = await axiosInstance.post("/event_list_view/", formData);
-      // Optionally, you can process response.data if needed
-      setMessage("Event registered successfully!");
+      console.log("✅ Event registration success:", response.data);
+
+      setMessage("✅ Event registered successfully!");
       setShowPopup(true);
 
-      // Optionally reset the form
       setImage(null);
       setTitle("");
       setDescription("");
@@ -45,19 +40,20 @@ const EventRegistration = () => {
       setEventPlace("");
       setEstimatedAttendees(0);
     } catch (error) {
-      setMessage(`Error: ${error.message}`);
+      console.error("❌ Error registering event:", error.response || error);
+      setMessage("❌ Failed to register event. Please try again.");
       setShowPopup(true);
     }
   };
 
   return (
     <div className="registration-container">
-      <h2 className="registration-title">Event Registration</h2>
+      <h2 className="registration-title">Register a New Event</h2>
       <form onSubmit={handleSubmit} className="registration-form">
         <div className="form-group">
           <label>Image:</label>
           <label htmlFor="file-upload" className="custom-file-label">
-            {image ? image.name : "No file selected"}
+            {image ? image.name : "Click to upload"}
           </label>
           <input
             id="file-upload"
@@ -67,6 +63,7 @@ const EventRegistration = () => {
             onChange={(e) => setImage(e.target.files[0])}
           />
         </div>
+
         <div className="form-group">
           <label>Title:</label>
           <input
@@ -77,6 +74,7 @@ const EventRegistration = () => {
             className="form-input"
           />
         </div>
+
         <div className="form-group">
           <label>Description:</label>
           <textarea
@@ -86,6 +84,7 @@ const EventRegistration = () => {
             className="form-textarea"
           />
         </div>
+
         <div className="form-group">
           <label>Event Time:</label>
           <input
@@ -96,6 +95,7 @@ const EventRegistration = () => {
             className="form-input"
           />
         </div>
+
         <div className="form-group">
           <label>Event Place:</label>
           <input
@@ -106,16 +106,19 @@ const EventRegistration = () => {
             className="form-input"
           />
         </div>
+
         <div className="form-group">
           <label>Estimated Attendees:</label>
           <input
             type="number"
+            min="0"
             value={estimatedAttendees}
             onChange={(e) => setEstimatedAttendees(e.target.value)}
             required
             className="form-input"
           />
         </div>
+
         <button type="submit" className="form-button">
           Register Event
         </button>
@@ -128,10 +131,12 @@ const EventRegistration = () => {
             <button
               onClick={() => {
                 setShowPopup(false);
-                window.location.href = "/dashboard";
+                if (message.startsWith("✅")) {
+                  window.location.href = "/dashboard";
+                }
               }}
             >
-              Return to Events
+              {message.startsWith("✅") ? "Go to Dashboard" : "Close"}
             </button>
           </div>
         </div>

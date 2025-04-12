@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axiosInstance from "../AxiosIntercept"; // Axios instance with Firebase token interceptor
+import axiosInstance from "../AxiosIntercept";
 
 const GeolocationComponent = ({
   address,
@@ -11,7 +11,7 @@ const GeolocationComponent = ({
   const [distance, setDistance] = useState(null);
   const [error, setError] = useState(null);
   const [updateMessage, setUpdateMessage] = useState("");
-  const [hasAttended, setHasAttended] = useState(false); // Track attendance
+  const [hasAttended, setHasAttended] = useState(false);
 
   useEffect(() => {
     if (eventId && localStorage.getItem(`attended_${eventId}`)) {
@@ -80,38 +80,45 @@ const GeolocationComponent = ({
     }
   }, [address]);
 
-  const thresholdDistance = 1; // km
+  const thresholdDistance = 1;
 
   const handleAttend = async () => {
+    if (!eventId) {
+      console.warn("⚠️ Missing eventId, cannot update attendance.");
+      setUpdateMessage("Error: Invalid event ID.");
+      return;
+    }
+
     if (hasAttended) {
       setUpdateMessage("You have already marked your attendance.");
       return;
     }
 
     try {
+      console.log("📡 Sending attendance for eventId:", eventId);
       const response = await axiosInstance.post(`/event_list_view/`, {
         event_id: eventId,
         increment: 1,
       });
 
-      const updatedEvent = response.data;
+      const updatedEvent = response.data?.event || response.data;
       if (onAttendanceUpdate) {
         onAttendanceUpdate(updatedEvent);
       }
 
-      setUpdateMessage("Attendance updated!");
+      setUpdateMessage("✅ Attendance updated!");
       setHasAttended(true);
       localStorage.setItem(`attended_${eventId}`, "true");
     } catch (error) {
-      console.error("Error updating attendance:", error);
-      setUpdateMessage("Error updating attendance.");
+      console.error("Error updating attendance:", error.response || error);
+      setUpdateMessage("❌ Error updating attendance.");
     }
   };
 
   return (
     <div>
       {error ? (
-        <p>Error: {error}</p>
+        <p style={{ color: "red" }}>Error: {error}</p>
       ) : (
         <>
           <p>
@@ -121,7 +128,7 @@ const GeolocationComponent = ({
           </p>
           {distance !== null && distance <= thresholdDistance && (
             <>
-              <p style={{ color: "black", fontWeight: "bold" }}>
+              <p style={{ fontWeight: "bold" }}>
                 You're close to this event! Click below to mark your attendance:
               </p>
               <button onClick={handleAttend} disabled={hasAttended}>
