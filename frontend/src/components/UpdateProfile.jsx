@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../AxiosIntercept";
 
 export default function UpdateProfile() {
   const emailRef = useRef();
@@ -32,13 +32,13 @@ export default function UpdateProfile() {
     async function fetchUserProfile() {
       try {
         const token = await currentUser.getIdToken();
-        const response = await axios.get("/api/user-profile/", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const response = await axiosInstance.get("/user-profile/", {
         });
         const { xp, profile_name } = response.data;
         setXp(xp);
+        console.log("This is the response:", response);
+        console.log("This is the xp", xp);
+        console.log("This is the profile name", profile_name);
         setProfileName(profile_name);
       } catch (err) {
         console.error("Failed to fetch user profile", err);
