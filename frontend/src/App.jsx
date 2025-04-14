@@ -9,6 +9,9 @@ import UpdateProfile from './components/UpdateProfile';
 import Admin from "./components/admin"
 import UserEvents from "./components/UserEvents";
 import EditEvent from "./components/EditEvent";
+import About from "./components/About.jsx";       
+import Contact from "./components/Contact.jsx";   
+import NotFound from "./components/NotFound"; 
 
 function App() {
     return (
@@ -63,7 +66,13 @@ function App() {
                     />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
+
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    
+                    <Route path="*" element={<NotFound />} />
                     <Route path="/" element={<Login />} />
+                
                 </Routes>
             </BrowserRouter>
         </div>

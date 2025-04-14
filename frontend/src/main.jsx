@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import './index.css'
 import App from './App.jsx'
 
-import './index.css'; // if you have global styles
+import './index.css'; // Import main CSS file
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
