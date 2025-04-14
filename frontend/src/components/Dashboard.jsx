@@ -7,6 +7,7 @@ import Footer from "./Footer.jsx";
 import "../styles/Dashboard.css";
 import axiosInstance from "../AxiosIntercept";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { QRCodeCanvas } from "qrcode.react"; // Use the named export from qrcode.react
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
@@ -32,12 +33,11 @@ function Dashboard() {
     setEvents((prevEvents) =>
       prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
     );
-
-    // ✅ Show a quick feedback message
     setAttendanceMessage(`✅ Marked attendance for: ${updatedEvent.title}`);
     setTimeout(() => setAttendanceMessage(""), 3000);
   };
 
+  // Sorting function for events
   const sortEvents = (events, sortBy) => {
     const cloned = [...events];
     switch (sortBy) {
@@ -64,28 +64,21 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      {/* Navbar + Header */}
       <div className="header-container">
         <Navbar />
         <Header />
       </div>
-
       <main className="content">
-        {/* ✅ Attendance Toast */}
         {attendanceMessage && (
           <div className="attendance-toast">
             <p>{attendanceMessage}</p>
           </div>
         )}
-
-        {/* Register New Event */}
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <Link to="/event-registration" className="register-event-link">
             Register a New Event
           </Link>
         </div>
-
-        {/* Sorting Options */}
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <label htmlFor="sort-by">Sort By:</label>
           <select
@@ -98,55 +91,62 @@ function Dashboard() {
             <option value="most_active">Most Active</option>
           </select>
         </div>
-
         <h2 className="event-section-title">Nearby Events</h2>
         {loading && <p>Loading events...</p>}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
         {!loading && !error && sortedEvents.length === 0 && (
           <p>No events available.</p>
         )}
-
         {!loading && !error && sortedEvents.length > 0 && (
           <div className="event-list">
-            {sortedEvents.map((event) => (
-              <div key={event.id} className="event-card">
-                <h3>{event.title}</h3>
-                {event.image && (
-                  <img
-                    src={
-                      event.image.startsWith("http")
-                        ? event.image
-                        : `/media/event_images/${event.image}`
-                    }
-                    alt={event.title}
-                    style={{ maxWidth: "300px", display: "block" }}
-                  />
-                )}
-                <p>{event.description}</p>
-                <p>
-                  <strong>Host:</strong> {event.host}
-                </p>
-                <p>
-                  <strong>Event Time:</strong>{" "}
-                  {new Date(event.event_time).toLocaleString()}
-                </p>
-                <p>
-                  <strong>Location:</strong> {event.event_place}
-                </p>
-                <p>
-                  <strong>Attendees:</strong> {event.estimated_attendees}
-                </p>
-                <p>
-                  <strong>Proximity:</strong>{" "}
-                  <GeolocationComponent
-                    address={event.event_place}
-                    eventId={event.id}
-                    estimatedAttendees={event.estimated_attendees}
-                    onAttendanceUpdate={handleAttendanceUpdate}
-                  />
-                </p>
-              </div>
-            ))}
+            {sortedEvents.map((event) => {
+              // Create a URL that will mark attendance.
+              // You should handle this URL in your backend or React routes.
+              const qrUrl = `${window.location.origin}/qr-checkin?eventId=${event.id}`;
+              return (
+                <div key={event.id} className="event-card">
+                  <h3>{event.title}</h3>
+                  {event.image && (
+                    <img
+                      src={
+                        event.image.startsWith("http")
+                          ? event.image
+                          : `/media/event_images/${event.image}`
+                      }
+                      alt={event.title}
+                      style={{ maxWidth: "300px", display: "block" }}
+                    />
+                  )}
+                  <p>{event.description}</p>
+                  <p>
+                    <strong>Host:</strong> {event.host}
+                  </p>
+                  <p>
+                    <strong>Event Time:</strong>{" "}
+                    {new Date(event.event_time).toLocaleString()}
+                  </p>
+                  <p>
+                    <strong>Location:</strong> {event.event_place}
+                  </p>
+                  <p>
+                    <strong>Attendees:</strong> {event.estimated_attendees}
+                  </p>
+                  <p>
+                    <strong>Proximity:</strong>{" "}
+                    <GeolocationComponent
+                      address={event.event_place}
+                      eventId={event.id}
+                      estimatedAttendees={event.estimated_attendees}
+                      onAttendanceUpdate={handleAttendanceUpdate}
+                    />
+                  </p>
+                  <div className="event-qr-code" style={{ marginTop: "10px" }}>
+                    <p>Scan to mark attendance:</p>
+                    <QRCodeCanvas value={qrUrl} size={128} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </main>
