@@ -3,8 +3,10 @@ venv/
 env/
 ENV/
 
-# Node.js dependencies
-node_modules/
+
+# Ignore all node_modules recursivelyd
+**/node_modules/
+
 
 # Python compiled files
 __pycache__/
