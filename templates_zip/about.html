@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - EventHub</title>
+  <link rel="stylesheet" href="about.css" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="header-container">
+      <nav class="navbar">
+        <img src="assets/Event-Hub.png" alt="Event Hub Logo" class="logo" />
+        <div class="hamburger-menu" id="hamburger-menu">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <div class="nav-links" id="nav-links">
+          <a href="dashboard.html">Home</a>
+          <a href="myevents.html">My Events</a>
+          <a href="profile.html">Profile</a>
+          <a href="admin.html">User Management</a>
+          <a href="contact.html">Contact</a>
+          <a href="about.html">About Us</a>
+        </div>
+      </nav>
+      <header class="header">
+        <h1>About Us</h1>
+      </header>
+    </div>
+
+    <main class="content">
+      <div class="container">
+        <h2>Our Mission</h2>
+        <p>
+          EventHub is dedicated to connecting communities on college campuses by making it easy to create, discover, and attend local events. We believe in fostering engagement through innovative location-based services and a fun, interactive experience for everyone.
+        </p>
+        
+        <h2>Our Story</h2>
+        <p>
+          Founded in 2025, EventHub was born out of a desire to bring people together. Our team, comprising Simon Meili, Zachary Felcyn, and Luis Zarate has a passion for technology and community building. With experience in web development and a drive for innovation, we built EventHub to serve as a catalyst for meaningful campus interactions.
+        </p>
+        
+        <h2>Our Team</h2>
+        <p>
+          Our team is committed to delivering a user-friendly platform that leverages the latest web technologies. We continuously strive to improve the experience by listening to feedback and adopting best practices in design and development.
+        </p>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 EventHub. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const hamburger = document.getElementById("hamburger-menu");
+    const navLinks = document.getElementById("nav-links");
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+  </script>
+</body>
+</html>

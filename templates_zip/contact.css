@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+  
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .header-container {
+    background: #d4c9c9;
+    padding: 10px;
+  }
+  
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 10px;
+    background-color: #3498db;
+  }
+  
+  .navbar .logo {
+    height: 40px;
+  }
+  
+  .hamburger-menu {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 25px;
+    height: 25px;
+  }
+  
+  .hamburger-menu .bar {
+    height: 3px;
+    width: 100%;
+    background-color: #efefef;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background: #dcdbdb;
+    padding: 10px;
+    border: 1px solid #434141;
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    margin: 5px 0;
+  }
+  
+  .header {
+    text-align: center;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .footer {
+    background: #f4f4f4;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  /* Contact Page Specific Styling */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  form .mb-3 {
+    margin-bottom: 15px;
+  }
+  
+  form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .btn-primary {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0069d9;
+  }
+  
