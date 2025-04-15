@@ -1,3 +1,4 @@
+// Dashboard.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GeolocationComponent from "./Geolocation.jsx";
@@ -7,7 +8,7 @@ import Footer from "./Footer.jsx";
 import "../styles/Dashboard.css";
 import axiosInstance from "../AxiosIntercept";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { QRCodeCanvas } from "qrcode.react"; // Use the named export from qrcode.react
+import { QRCodeCanvas } from "qrcode.react"; // Named export
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
@@ -20,15 +21,18 @@ function Dashboard() {
     axiosInstance
       .get("/event_list_view/")
       .then((response) => {
+        console.log("Received event data:", response.data); // log the data
         setEvents(response.data);
         setLoading(false);
       })
       .catch((err) => {
+        console.error("Error retrieving event data:", err);
         setError(err.message);
         setLoading(false);
       });
   }, []);
 
+  // This function updates the local state once attendance is marked.
   const handleAttendanceUpdate = (updatedEvent) => {
     setEvents((prevEvents) =>
       prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
@@ -100,9 +104,8 @@ function Dashboard() {
         {!loading && !error && sortedEvents.length > 0 && (
           <div className="event-list">
             {sortedEvents.map((event) => {
-              // Create a URL that will mark attendance.
-              // You should handle this URL in your backend or React routes.
-              const qrUrl = `${window.location.origin}/qr-checkin?eventId=${event.id}`;
+              // Use the relative URL for QR check-in:
+              const qrUrl = `http://localhost:5173/qr-checkin?eventId=${event.id}`;
               return (
                 <div key={event.id} className="event-card">
                   <h3>{event.title}</h3>

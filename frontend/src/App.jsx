@@ -9,6 +9,7 @@ import UpdateProfile from './components/UpdateProfile';
 import Admin from "./components/admin"
 import UserEvents from "./components/UserEvents";
 import EditEvent from "./components/EditEvent";
+import QRCheckin from "./components/QRCheckin";
 
 function App() {
     return (
@@ -61,6 +62,7 @@ function App() {
                             </PrivateRoute>
                         }
                     />
+                    <Route path="/qr-checkin" element={<QRCheckin />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/" element={<Login />} />

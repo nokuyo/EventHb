@@ -7,8 +7,6 @@ class UserProfile(models.Model):
     profile_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     
-    # 🎮 XP Field (New)
-    # COmment
     xp = models.PositiveIntegerField(default=0)
 
     def __str__(self):

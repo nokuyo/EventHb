@@ -20,6 +20,9 @@ from firebase_admin import credentials
 if firebase_admin._apps:
     firebase_admin.delete_app(firebase_admin.get_app())
 
+from corsheaders.defaults import default_headers
+
+
 # Reinitialize with the new service account JSON file
 cred = credentials.Certificate("./eventhub-be80d-firebase-adminsdk-fbsvc-cd72fbd0c0.json")
 firebase_admin.initialize_app(cred)
@@ -157,3 +160,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     "http://localhost:5173"
 # ]
 CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "ngrok-skip-browser-warning",
+]
