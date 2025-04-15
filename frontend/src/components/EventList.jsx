@@ -27,10 +27,10 @@ function EventList() {
 
   useEffect(() => {
     if (useFakeData) {
-      // ✅ Using fake JSON data
+      // Using fake JSON data
       setEvents(fakeEvents);
     } else {
-      // ✅ Fetching from backend API
+      // Fetching from backend API
       fetch("http://localhost:8000/api/event_list_view/")
         .then((res) => {
           if (!res.ok) throw new Error("Failed to fetch events");

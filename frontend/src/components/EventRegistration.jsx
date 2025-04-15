@@ -28,9 +28,9 @@ const EventRegistration = () => {
 
     try {
       const response = await axiosInstance.post("/event_list_view/", formData);
-      console.log("✅ Event registration success:", response.data);
+      console.log(" Event registration success:", response.data);
 
-      setMessage("✅ Event registered successfully!");
+      setMessage(" Event registered successfully!");
       setShowPopup(true);
 
       setImage(null);
@@ -40,8 +40,8 @@ const EventRegistration = () => {
       setEventPlace("");
       setEstimatedAttendees(0);
     } catch (error) {
-      console.error("❌ Error registering event:", error.response || error);
-      setMessage("❌ Failed to register event. Please try again.");
+      console.error(" Error registering event:", error.response || error);
+      setMessage(" Failed to register event. Please try again.");
       setShowPopup(true);
     }
   };
@@ -131,6 +131,7 @@ const EventRegistration = () => {
             <button
               onClick={() => {
                 setShowPopup(false);
+                //Using emoji as a success indicator 
                 if (message.startsWith("✅")) {
                   window.location.href = "/dashboard";
                 }

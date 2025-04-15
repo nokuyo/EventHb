@@ -84,7 +84,7 @@ const GeolocationComponent = ({
 
   const handleAttend = async () => {
     if (!eventId) {
-      console.warn("⚠️ Missing eventId, cannot update attendance.");
+      console.warn(" Missing eventId, cannot update attendance.");
       setUpdateMessage("Error: Invalid event ID.");
       return;
     }
@@ -106,12 +106,12 @@ const GeolocationComponent = ({
         onAttendanceUpdate(updatedEvent);
       }
 
-      setUpdateMessage("✅ Attendance updated!");
+      setUpdateMessage(" Attendance updated!");
       setHasAttended(true);
       localStorage.setItem(`attended_${eventId}`, "true");
     } catch (error) {
       console.error("Error updating attendance:", error.response || error);
-      setUpdateMessage("❌ Error updating attendance.");
+      setUpdateMessage(" Error updating attendance.");
     }
   };
 

@@ -13,4 +13,4 @@ function EventCard({ event }) {
   );
 }
 
-export default EventCard;  // ✅ Ensure this is present
+export default EventCard;  
