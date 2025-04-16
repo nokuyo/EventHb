@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import logo from "../assets/Event-Hub.png"; 
-import { Link, useNavigate } from 'react-router-dom';
+import logo from "../assets/Event-Hub.png";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State to track menu visibility
@@ -26,6 +26,8 @@ function Navbar() {
         <a href="/dashboard">Home</a>
         <a href="/user-events">My Events</a>
         <Link to="/profile">Profile</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
       </div>
     </nav>
   );

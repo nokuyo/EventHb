@@ -7,11 +7,10 @@ from .models import UserProfile
 class FirebaseAuthentication(BaseAuthentication):
     def authenticate(self, request):
         print("bruh")
-        # Retrieve the Firebase token from the request (Authorization header or wherever it might be)
+        # Retrieve the Firebase token from the request 
         id_token = self._get_token_from_request(request)
         print(id_token)
         if not id_token:
-            print("bruh")
             return None  # No token, so no authentication
 
         # Verify the token
@@ -26,9 +25,6 @@ class FirebaseAuthentication(BaseAuthentication):
         display_name = decoded_token.get("name") or email.split("@")[0] or "Unknown"
 
         user, created = User.objects.get_or_create(username=uid, defaults={"email": email, "first_name": display_name})
-        if not created:
-            # Optionally update email or name if needed
-            pass
 
         # Ensure a UserProfile exists
         UserProfile.objects.get_or_create(user=user, defaults={"profile_name": display_name, "email": email})
