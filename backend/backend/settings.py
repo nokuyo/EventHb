@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os 
-# firebase_utils.py
 import firebase_admin
 from firebase_admin import credentials
 
@@ -30,9 +29,6 @@ firebase_admin.initialize_app(cred)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-kes7d&3n=3(7q^_+127y-hbmlsw-of(@z**vv=vwr2g*+c5(34'
@@ -56,16 +52,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
 ]
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'api.authentication.FirebaseAuthentication',
-#     ),
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticated',
-#     ),
-# }
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

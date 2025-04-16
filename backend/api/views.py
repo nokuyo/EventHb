@@ -10,7 +10,7 @@ from .serializers import EventSerializer, UserProfileSerializer
 from .authentication import FirebaseAuthentication
 
 
-# 🎯 CRUD + user-specific events
+# CRUD and user specific events 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
@@ -29,7 +29,7 @@ class EventViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-# 🌱 Custom GET/POST for all events + XP gain
+# Get/Post for events 
 class EventListView(APIView):
     authentication_classes = [FirebaseAuthentication]
     permission_classes = [IsAuthenticated]
@@ -54,7 +54,6 @@ class EventListView(APIView):
     def post(self, request, format=None):
         user_profile = request.user.userprofile
 
-        # 🪵 Log incoming POST request
         print("📥 Incoming POST data:", request.data)
 
         # Attendance logic
@@ -89,8 +88,7 @@ class EventListView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-# 👤 View to fetch user XP, email, etc.
+# For XP gain
 class UserProfileView(APIView):
     authentication_classes = [FirebaseAuthentication]
     permission_classes = [IsAuthenticated]
@@ -99,3 +97,10 @@ class UserProfileView(APIView):
         user_profile = request.user.userprofile
         serializer = UserProfileSerializer(user_profile)
         return Response(serializer.data)
+
+# This is specifically for the admin 
+class UserProfileViewSet(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+    authentication_classes = [FirebaseAuthentication]
+    permission_classes = [IsAuthenticated]
