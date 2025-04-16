@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../assets/Event-Hub.png"; // Import the logo
+import logo from "../assets/Event-Hub.png"; 
 import { Link, useNavigate } from 'react-router-dom';
 
 function Navbar() {

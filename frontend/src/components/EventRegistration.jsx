@@ -11,15 +11,14 @@ const EventRegistration = () => {
   const [estimatedAttendees, setEstimatedAttendees] = useState(0);
 
   const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    if (image) {
-      formData.append("image", image);
-    }
+    if (image) formData.append("image", image);
     formData.append("title", title.trim());
     formData.append("description", description.trim());
     formData.append("event_time", eventTime);
@@ -28,11 +27,13 @@ const EventRegistration = () => {
 
     try {
       const response = await axiosInstance.post("/event_list_view/", formData);
-      console.log(" Event registration success:", response.data);
+      console.log("Event registration success:", response.data);
 
-      setMessage(" Event registered successfully!");
+      setMessage("Event registered successfully!");
+      setIsSuccess(true);
       setShowPopup(true);
 
+      // Reset form
       setImage(null);
       setTitle("");
       setDescription("");
@@ -40,8 +41,9 @@ const EventRegistration = () => {
       setEventPlace("");
       setEstimatedAttendees(0);
     } catch (error) {
-      console.error(" Error registering event:", error.response || error);
-      setMessage(" Failed to register event. Please try again.");
+      console.error("Error registering event:", error.response || error);
+      setMessage("Failed to register event. Please try again.");
+      setIsSuccess(false);
       setShowPopup(true);
     }
   };
@@ -131,13 +133,12 @@ const EventRegistration = () => {
             <button
               onClick={() => {
                 setShowPopup(false);
-                //Using emoji as a success indicator 
-                if (message.startsWith("✅")) {
+                if (isSuccess) {
                   window.location.href = "/dashboard";
                 }
               }}
             >
-              {message.startsWith("✅") ? "Go to Dashboard" : "Close"}
+              {isSuccess ? "Go to Dashboard" : "Close"}
             </button>
           </div>
         </div>

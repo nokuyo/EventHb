@@ -32,8 +32,7 @@ export default function UpdateProfile() {
     async function fetchUserProfile() {
       try {
         const token = await currentUser.getIdToken();
-        const response = await axiosInstance.get("/user-profile/", {
-        });
+        const response = await axiosInstance.get("/user-profile/", {});
         const { xp, profile_name } = response.data;
         setXp(xp);
         console.log("This is the response:", response);
@@ -92,16 +91,17 @@ export default function UpdateProfile() {
       <div className="w-100" style={{ maxWidth: "500px" }}>
         <Card>
           <Card.Body className="text-center">
-            {/* 👤 Profile Picture */}
+            {/* Profile Picture -- we respect Jimmy Lee our Mentor */}
             <Image
-              src="https://via.placeholder.com/100"
+              src="/jimmy-lee.png"
               roundedCircle
               className="mb-3"
               alt="User Avatar"
+              width={80}
             />
             <h4 className="mb-1">{profileName || currentUser.email}</h4>
 
-            {/* 📊 XP Progress Bar */}
+            {/* XP Progress Bar -- Chicken Jockey */}
             <div className="text-start mt-3">
               <strong>XP:</strong> {xp} / {xpMax}
               <ProgressBar

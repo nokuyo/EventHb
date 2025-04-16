@@ -8,7 +8,6 @@ import "../styles/Dashboard.css";
 import axiosInstance from "../AxiosIntercept";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { QRCodeCanvas } from "qrcode.react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
@@ -36,7 +35,7 @@ function Dashboard() {
     setEvents((prevEvents) =>
       prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
     );
-    setAttendanceMessage(`✅ Marked attendance for: ${updatedEvent.title}`);
+    setAttendanceMessage(` Marked attendance for: ${updatedEvent.title}`);
     setTimeout(() => setAttendanceMessage(""), 3000);
   };
 
@@ -65,22 +64,31 @@ function Dashboard() {
   const sortedEvents = sortEvents(events, sortBy);
 
   const handleQRScan = (result) => {
-    try {
-      const parsed = new URL(result);
-      const eventId = parsed.searchParams.get("eventId");
-      console.log(parsed);
-      console.log(eventId);
-      console.log("test qr code lol");
-      if (eventId) {
-        setScannedEventId(eventId);
-        setAttendanceMessage(`📷 Scanned Event ID: ${eventId}`);
-        setTimeout(() => setAttendanceMessage(""), 3000);
-      } else {
-        setAttendanceMessage("invalid QR Code");
-      }
-    } catch {
-      setAttendanceMessage("Invalid QR Code");
+    console.log(" Raw QR scan result:", result);
+
+    // Check if it's an array with at least one item
+    if (!Array.isArray(result) || result.length === 0) {
+      setAttendanceMessage(" QR Code scan returned an empty result.");
+      return;
     }
+
+    const qrText = result[0]?.rawValue;
+
+    console.log(" Extracted QR text from rawValue:", qrText);
+
+    if (!qrText || typeof qrText !== "string") {
+      setAttendanceMessage(" QR Code content is not a valid string.");
+      return;
+    }
+
+    setAttendanceMessage(`Scanned: ${qrText}`);
+
+    const newTab = window.open(qrText, "_blank");
+    setTimeout(() => {
+      if (newTab && !newTab.closed) newTab.close();
+    }, 5000);
+
+    setTimeout(() => setAttendanceMessage(""), 3000);
   };
 
   return (
@@ -115,7 +123,6 @@ function Dashboard() {
           </select>
         </div>
 
-        {/* QR Scanner Section */}
         <div style={{ textAlign: "center", marginBottom: "30px" }}>
           <h3>📸 Scan QR Code to Check In</h3>
           <button onClick={() => setShowQRScanner((prev) => !prev)}>
@@ -170,10 +177,6 @@ function Dashboard() {
                 <p>
                   <strong>Attendees:</strong> {event.estimated_attendees}
                 </p>
-                {/* 
-                  Changed the container element from <p> to <div> to prevent nesting
-                  a <p> from GeolocationComponent inside another <p>
-                */}
                 <div>
                   <strong>Proximity:</strong>{" "}
                   <GeolocationComponent
@@ -184,7 +187,6 @@ function Dashboard() {
                   />
                 </div>
 
-                {/* QR Code for Event Check In */}
                 <div style={{ textAlign: "center", marginTop: "1rem" }}>
                   <p>Scan to Check In:</p>
                   <QRCodeCanvas
