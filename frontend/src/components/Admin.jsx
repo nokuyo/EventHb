@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Admin.css";
+import axiosInstance from "../AxiosIntercept";
 
 export default function Admin() {
   const [users, setUsers] = useState([]);
@@ -22,9 +23,8 @@ export default function Admin() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:8000/users/");
-      const data = await response.json();
-      setUsers(data);
+      const response = await axiosInstance.get("users/");
+      setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -33,9 +33,7 @@ export default function Admin() {
   const handleRemoveUser = async () => {
     if (!selectedUser) return;
     try {
-      await fetch(`http://localhost:8000/users/${selectedUser}/`, {
-        method: "DELETE",
-      });
+      await axiosInstance.delete(`users/${selectedUser}/`);
       fetchUsers(); // refresh list
       setSelectedUser("");
     } catch (error) {
@@ -45,9 +43,8 @@ export default function Admin() {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch("http://localhost:8000/events/");
-      const data = await response.json();
-      setEvents(data);
+      const response = await axiosInstance.get("events/");
+      setEvents(response.data);
     } catch (error) {
       console.error("Error fetching events:", error);
     }
@@ -56,12 +53,17 @@ export default function Admin() {
   const handleRemoveEvent = async () => {
     if (!selectedEvent) return;
     try {
-      await fetch(`http://localhost:8000/events/${selectedEvent}/`, {
-        method: "DELETE",
-      });
+      await axiosInstance.delete(`events/${selectedEvent}/`);
       fetchEvents();
       setSelectedEvent("");
-      setEditEvent({});
+      setEditEvent({
+        image: "",
+        title: "",
+        description: "",
+        event_time: "",
+        event_place: "",
+        estimated_attendees: 0,
+      });
     } catch (error) {
       console.error("Error deleting event:", error);
     }
@@ -69,7 +71,9 @@ export default function Admin() {
 
   const handleSelectEvent = (eventId) => {
     setSelectedEvent(eventId);
-    const foundEvent = events.find((evt) => String(evt.id) === String(eventId));
+    const foundEvent = events.find(
+      (evt) => String(evt.id) === String(eventId)
+    );
     if (foundEvent) {
       setEditEvent({
         image: foundEvent.image || "",
@@ -88,20 +92,14 @@ export default function Admin() {
 
   const handleSaveEvent = async () => {
     if (!selectedEvent) return;
-
     try {
-      const response = await fetch(
-        `http://localhost:8000/events/${selectedEvent}/`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(editEvent),
-        }
+      const response = await axiosInstance.put(
+        `events/${selectedEvent}/`,
+        editEvent,
+        { headers: { "Content-Type": "application/json" } }
       );
 
-      if (!response.ok) throw new Error("Failed to save event");
+      if (response.status !== 200) throw new Error("Failed to save event");
 
       fetchEvents(); // refresh event list
       alert("Event updated successfully!");
