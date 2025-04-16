@@ -17,6 +17,7 @@ function Dashboard() {
   const [sortBy, setSortBy] = useState("upcoming");
   const [attendanceMessage, setAttendanceMessage] = useState("");
   const [scannedEventId, setScannedEventId] = useState(null);
+  const [showQRScanner, setShowQRScanner] = useState(false);
 
   useEffect(() => {
     axiosInstance
@@ -67,15 +68,18 @@ function Dashboard() {
     try {
       const parsed = new URL(result);
       const eventId = parsed.searchParams.get("eventId");
+      console.log(parsed);
+      console.log(eventId);
+      console.log("test qr code lol");
       if (eventId) {
         setScannedEventId(eventId);
         setAttendanceMessage(`📷 Scanned Event ID: ${eventId}`);
         setTimeout(() => setAttendanceMessage(""), 3000);
       } else {
-        setAttendanceMessage("❌ Invalid QR Code");
+        setAttendanceMessage("invalid QR Code");
       }
     } catch {
-      setAttendanceMessage("❌ Invalid QR Code");
+      setAttendanceMessage("Invalid QR Code");
     }
   };
 
@@ -114,15 +118,20 @@ function Dashboard() {
         {/* QR Scanner Section */}
         <div style={{ textAlign: "center", marginBottom: "30px" }}>
           <h3>📸 Scan QR Code to Check In</h3>
-          <div style={{ maxWidth: "350px", margin: "0 auto" }}>
-            <Scanner
-              onScan={(result) => handleQRScan(result)}
-              onError={(error) =>
-                console.warn("QR scanner error:", error?.message)
-              }
-              constraints={{ facingMode: "environment" }}
-            />
-          </div>
+          <button onClick={() => setShowQRScanner((prev) => !prev)}>
+            {showQRScanner ? "Stop Scanner" : "Start Scanner"}
+          </button>
+          {showQRScanner && (
+            <div style={{ maxWidth: "350px", margin: "20px auto" }}>
+              <Scanner
+                onScan={(result) => handleQRScan(result)}
+                onError={(error) =>
+                  console.warn("QR scanner error:", error?.message)
+                }
+                constraints={{ facingMode: "environment" }}
+              />
+            </div>
+          )}
         </div>
 
         <h2 className="event-section-title">Nearby Events</h2>
@@ -161,7 +170,11 @@ function Dashboard() {
                 <p>
                   <strong>Attendees:</strong> {event.estimated_attendees}
                 </p>
-                <p>
+                {/* 
+                  Changed the container element from <p> to <div> to prevent nesting
+                  a <p> from GeolocationComponent inside another <p>
+                */}
+                <div>
                   <strong>Proximity:</strong>{" "}
                   <GeolocationComponent
                     address={event.event_place}
@@ -169,9 +182,9 @@ function Dashboard() {
                     estimatedAttendees={event.estimated_attendees}
                     onAttendanceUpdate={handleAttendanceUpdate}
                   />
-                </p>
+                </div>
 
-                {/* ✅ QR Code */}
+                {/* QR Code for Event Check In */}
                 <div style={{ textAlign: "center", marginTop: "1rem" }}>
                   <p>Scan to Check In:</p>
                   <QRCodeCanvas
