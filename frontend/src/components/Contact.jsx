@@ -16,7 +16,8 @@ function Contact() {
           <h2>Get in Touch</h2>
           <p>
             Have questions or need support? Please fill out the form below, and
-            our team will get back to you as soon as possible.
+            our team will get back to you as soon as possible. We take reports
+            seriously and will investigate all reported events.
           </p>
 
           <form action="/contact" method="POST" className="contact-form">
