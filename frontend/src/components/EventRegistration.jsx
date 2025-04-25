@@ -26,10 +26,14 @@ const EventRegistration = () => {
     formData.append("estimated_attendees", parseInt(estimatedAttendees, 10));
 
     try {
-      const response = await axiosInstance.post("/event_list_view/", formData);
+      const response = await axiosInstance.post(
+        "/event_list_view/", // ✅ FIXED — no `/api/` here
+        formData
+      );
+
       console.log("Event registration success:", response.data);
 
-      setMessage("Event registered successfully!");
+      setMessage("✅ Event registered successfully!");
       setIsSuccess(true);
       setShowPopup(true);
 
@@ -40,9 +44,30 @@ const EventRegistration = () => {
       setEventTime("");
       setEventPlace("");
       setEstimatedAttendees(0);
+
+      // Auto-close popup after 3 seconds if successful
+      setTimeout(() => {
+        setShowPopup(false);
+        window.location.href = "/dashboard";
+      }, 3000);
     } catch (error) {
-      console.error("Error registering event:", error.response || error);
-      setMessage("Failed to register event. Please try again.");
+      console.error("Error registering event:", error);
+
+      let errorMsg = "Failed to register event. Please try again.";
+
+      if (error.response) {
+        if (error.response.data?.error) {
+          errorMsg = error.response.data.error;
+        } else if (typeof error.response.data === "string") {
+          errorMsg = error.response.data;
+        } else {
+          errorMsg = "Unexpected server error occurred.";
+        }
+      } else {
+        errorMsg = error.message;
+      }
+
+      setMessage(`❌ ${errorMsg}`);
       setIsSuccess(false);
       setShowPopup(true);
     }
@@ -130,16 +155,14 @@ const EventRegistration = () => {
         <div className="popup-overlay">
           <div className="popup">
             <p className="form-message">{message}</p>
-            <button
-              onClick={() => {
-                setShowPopup(false);
-                if (isSuccess) {
-                  window.location.href = "/dashboard";
-                }
-              }}
-            >
-              {isSuccess ? "Go to Dashboard" : "Close"}
-            </button>
+            {!isSuccess && (
+              <button
+                onClick={() => setShowPopup(false)}
+                className="popup-button"
+              >
+                Close
+              </button>
+            )}
           </div>
         </div>
       )}
