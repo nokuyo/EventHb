@@ -15,7 +15,6 @@ function Dashboard() {
   const [error, setError] = useState(null);
   const [sortBy, setSortBy] = useState("upcoming");
   const [attendanceMessage, setAttendanceMessage] = useState("");
-  const [scannedEventId, setScannedEventId] = useState(null);
   const [showQRScanner, setShowQRScanner] = useState(false);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ function Dashboard() {
     setEvents((prevEvents) =>
       prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
     );
-    setAttendanceMessage(` Marked attendance for: ${updatedEvent.title}`);
+    setAttendanceMessage(`Marked attendance for: ${updatedEvent.title}`);
     setTimeout(() => setAttendanceMessage(""), 3000);
   };
 
@@ -65,15 +64,12 @@ function Dashboard() {
 
   const handleQRScan = (result) => {
     console.log(" Raw QR scan result:", result);
-
-    // Check if it's an array with at least one item
     if (!Array.isArray(result) || result.length === 0) {
       setAttendanceMessage(" QR Code scan returned an empty result.");
       return;
     }
 
     const qrText = result[0]?.rawValue;
-
     console.log(" Extracted QR text from rawValue:", qrText);
 
     if (!qrText || typeof qrText !== "string") {
@@ -114,6 +110,7 @@ function Dashboard() {
           <label htmlFor="sort-by">Sort By:</label>
           <select
             id="sort-by"
+            className="sort-select"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
           >
@@ -142,7 +139,7 @@ function Dashboard() {
         </div>
 
         <h2 className="event-section-title">Nearby Events</h2>
-        {loading && <p>Loading events...</p>}
+        {loading && <div className="loading-spinner" />}
         {error && <p style={{ color: "red" }}>Error: {error}</p>}
         {!loading && !error && sortedEvents.length === 0 && (
           <p>No events available.</p>
@@ -154,13 +151,14 @@ function Dashboard() {
                 <h3>{event.title}</h3>
                 {event.image && (
                   <img
-                    src={
-                      event.image.startsWith("http")
-                        ? event.image
-                        : `/media/event_images/${event.image}`
-                    }
+                    src={event.image}
                     alt={event.title}
+                    loading="lazy"
                     style={{ maxWidth: "300px", display: "block" }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/fallback.png";
+                    }}
                   />
                 )}
                 <p>{event.description}</p>
@@ -169,7 +167,10 @@ function Dashboard() {
                 </p>
                 <p>
                   <strong>Event Time:</strong>{" "}
-                  {new Date(event.event_time).toLocaleString()}
+                  {new Date(event.event_time).toLocaleString(undefined, {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  })}
                 </p>
                 <p>
                   <strong>Location:</strong> {event.event_place}
