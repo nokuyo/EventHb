@@ -18,8 +18,10 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   UserProfile.associate = (models) => {
-    // If you later add relationships, define them here
-    // Example: UserProfile.hasMany(models.Event);
+    UserProfile.hasMany(models.Event, {
+      foreignKey: "userId",
+      as: "events"
+    });
   };
 
   return UserProfile;

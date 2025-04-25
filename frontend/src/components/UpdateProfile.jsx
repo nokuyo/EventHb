@@ -99,7 +99,7 @@ export default function UpdateProfile() {
               alt="User Avatar"
               width={80}
             />
-            <h4 className="mb-1">{profileName || currentUser.email}</h4>
+            <h4 className="mb-1">{currentUser.email}</h4>
 
             {/* XP Progress Bar -- Chicken Jockey */}
             <div className="text-start mt-3">

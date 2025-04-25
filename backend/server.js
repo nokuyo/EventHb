@@ -21,6 +21,7 @@ app.use("/public", express.static("public"));
 app.use("/api", require("./routes/eventRoutes"));
 app.use("/api", require("./routes/userProfileRoutes"));
 app.use("/api", require("./routes/adminUserRoutes"));
+app.use("/api", require("./routes/customEvents"))
 
 // Start server
 sequelize.sync().then(() => {

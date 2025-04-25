@@ -28,11 +28,27 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "UserProfiles",  // make sure this matches your table name
+        key:   "id"
+      },
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE"
+    }
   });
 
-  Event.associate = (models) => {
-    // Relationships can be defined here if you want later
-    // Example: Event.belongsTo(models.UserProfile, { foreignKey: 'userId' });
+
+    Event.associate = (models) => {
+      Event.belongsTo(models.UserProfile, {
+        foreignKey: "userId",
+        as: "creator"
+      // Relationships can be defined here if you want later
+      // Example: Event.belongsTo(models.UserProfile, { foreignKey: 'userId' });
+    });
   };
 
   return Event;

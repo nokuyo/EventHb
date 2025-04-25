@@ -163,9 +163,6 @@ function Dashboard() {
                 )}
                 <p>{event.description}</p>
                 <p>
-                  <strong>Host:</strong> {event.host}
-                </p>
-                <p>
                   <strong>Event Time:</strong>{" "}
                   {new Date(event.event_time).toLocaleString(undefined, {
                     dateStyle: "medium",

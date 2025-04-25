@@ -1,32 +1,44 @@
+// routes/eventRoutes.js
 const express = require("express");
 const router = express.Router();
 const { Event, UserProfile } = require("../models");
 const auth = require("../middleware/firebaseAuth");
 const multer = require("multer");
 
-// Set up multer for image uploads
+// Multer config for image uploads
 const storage = multer.diskStorage({
   destination: "public/event_images",
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
+  filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`)
 });
 const upload = multer({ storage });
 
 /**
  * GET /event_list_view
- * Returns all events formatted for the dashboard
+ * Returns only the events created by the signed-in user
  */
-router.get("/event_list_view", auth, async (req, res) => {
+router.get("/event_list_view/", auth, async (req, res) => {
   try {
-    const events = await Event.findAll();
-    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    // Find the user profile
+    let profile = await UserProfile.findOne({ where: { email: req.user.email } });
+    if (!profile)
+    {
+      profile = await UserProfile.create({
+        email: req.user.email,
+        profile_name: req.user.email,
+        xp: 0
+      })
+    }
 
-    const data = events.map((event) => ({
+    // Fetch events belonging to this user
+    const events = await Event.findAll({
+      where: { userId: profile.id },
+      order: [["event_time", "ASC"]]
+    });
+
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    const data = events.map(event => ({
       id: event.id,
-      image: event.image
-        ? `${baseUrl}/public/event_images/${event.image}`
-        : null,
+      image: event.image ? `${baseUrl}/public/event_images/${event.image}` : null,
       host: event.host,
       title: event.title,
       description: event.description,
@@ -44,22 +56,19 @@ router.get("/event_list_view", auth, async (req, res) => {
 
 /**
  * POST /event_list_view
- * Handles new event creation and attendance increment
+ * Creates a new event (or increments attendance) linked to the signed-in user
  */
 router.post(
-  "/event_list_view",
+  "/event_list_view/",
   auth,
   upload.single("image"),
   async (req, res) => {
     try {
-      const userEmail = req.user.email;
-      let user = await UserProfile.findOne({ where: { email: userEmail } });
-
-      // 🛠 Auto-create UserProfile if missing
+      // Ensure UserProfile exists (auto-create if needed)
+      let user = await UserProfile.findOne({ where: { email: req.user.email } });
       if (!user) {
-        console.log(`⚡ Creating new UserProfile for ${userEmail}`);
         user = await UserProfile.create({
-          email: userEmail,
+          email: req.user.email,
           profile_name: req.user.name || "Unnamed User",
           xp: 0,
         });
@@ -75,12 +84,12 @@ router.post(
         estimated_attendees,
       } = req.body;
 
-      // 🧮 Increment attendance logic
+      // If event_id provided, increment attendance
       if (event_id) {
         const event = await Event.findByPk(event_id);
         if (!event) return res.status(404).json({ error: "Event not found" });
 
-        event.estimated_attendees += parseInt(increment || 1);
+        event.estimated_attendees += parseInt(increment || 1, 10);
         await event.save();
 
         user.xp += 25;
@@ -89,17 +98,17 @@ router.post(
         return res.json(event);
       }
 
-      // 🎉 Otherwise, create new event
+      // Otherwise, create a new event linked to this user
       const image = req.file?.filename;
-
       const newEvent = await Event.create({
+        userId: user.id,
         image,
         title,
         host: user.profile_name,
         description,
         event_time,
         event_place,
-        estimated_attendees: parseInt(estimated_attendees || 0),
+        estimated_attendees: parseInt(estimated_attendees || 0, 10),
       });
 
       user.xp += 50;

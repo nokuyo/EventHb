@@ -1,29 +1,33 @@
+// routes/userProfile.js
 const express = require("express");
 const router = express.Router();
-const { UserProfile } = require("../models");
+const { UserProfile, Event } = require("../models");
 const auth = require("../middleware/firebaseAuth");
 
-// GET /user-profile
+/**
+ * GET /user-profile
+ * Returns the signed-in user's profile along with their events
+ */
 router.get("/user-profile", auth, async (req, res) => {
   try {
-    const user = await UserProfile.findOne({
+    const profile = await UserProfile.findOne({
       where: { email: req.user.email },
+      include: [{ model: Event, as: "events", order: [["event_time", "ASC"]] }]
     });
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+    if (!profile) return res.status(404).json({ error: "User not found" });
 
-    return res.json({
-      id: user.id,
-      email: user.email,
-      profile_name: user.profile_name,
-      xp: user.xp,
-      level: Math.floor(user.xp / 500),
+    res.json({
+      id: profile.id,
+      email: profile.email,
+      profile_name: profile.profile_name,
+      xp: profile.xp,
+      level: Math.floor(profile.xp / 500),
+      events: profile.events,
     });
   } catch (err) {
     console.error("Error fetching user profile:", err.message);
-    return res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server error" });
   }
 });
 
