@@ -61,7 +61,6 @@ function Contact() {
 
       <Footer />
 
-      {/* Embedded styling for the form */}
       <style>{`
         .contact-form {
           display: flex;

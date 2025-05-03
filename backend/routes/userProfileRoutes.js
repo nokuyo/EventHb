@@ -4,10 +4,7 @@ const router = express.Router();
 const { UserProfile, Event } = require("../models");
 const auth = require("../middleware/firebaseAuth");
 
-/**
- * GET /user-profile
- * Returns the signed-in user's profile along with their events
- */
+// Returns the signed-in user's profile along with their events
 router.get("/user-profile", auth, async (req, res) => {
   try {
     const profile = await UserProfile.findOne({

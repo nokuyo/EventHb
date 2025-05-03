@@ -54,6 +54,35 @@ router.get("/event_list_view/", auth, async (req, res) => {
   }
 });
 
+
+// GET /all_events/  → everything, regardless of who created it
+router.get("/all_events/", auth, async (req, res) => {
+  try {
+    const events = await Event.findAll({
+      include: [{ model: UserProfile, as: "creator", attributes: ["id", "profile_name"] }],
+      order: [["event_time", "ASC"]]
+    });
+
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    const data = events.map(event => ({
+      id: event.id,
+      image: event.image ? `${baseUrl}/public/event_images/${event.image}` : null,
+      host: event.host,
+      title: event.title,
+      description: event.description,
+      event_time: event.event_time,
+      event_place: event.event_place,
+      estimated_attendees: event.estimated_attendees,
+    }));
+
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: "Server error while loading all events." });
+  }
+});
+
+
+
 /**
  * POST /event_list_view
  * Creates a new event (or increments attendance) linked to the signed-in user

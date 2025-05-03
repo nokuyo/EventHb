@@ -43,7 +43,7 @@ export default function Admin() {
 
   const fetchEvents = async () => {
     try {
-      const response = await axiosInstance.get("events/");
+      const response = await axiosInstance.get("/events-admin/");
       setEvents(response.data);
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -53,7 +53,7 @@ export default function Admin() {
   const handleRemoveEvent = async () => {
     if (!selectedEvent) return;
     try {
-      await axiosInstance.delete(`events/${selectedEvent}/`);
+      await axiosInstance.delete(`events-admin/${selectedEvent}/`);
       fetchEvents();
       setSelectedEvent("");
       setEditEvent({

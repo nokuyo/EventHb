@@ -19,7 +19,7 @@ function Dashboard() {
 
   useEffect(() => {
     axiosInstance
-      .get("/event_list_view/")
+      .get("/all_events/")
       .then((response) => {
         setEvents(response.data);
         setLoading(false);

@@ -3,7 +3,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Event = sequelize.define("Event", {
     image: {
-      type: DataTypes.STRING, // Just store file name or URL
+      type: DataTypes.STRING, // Just store URL
     },
     title: {
       type: DataTypes.STRING,
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "UserProfiles",  // make sure this matches your table name
+        model: "UserProfiles",  
         key:   "id"
       },
       onDelete: "CASCADE",
@@ -46,8 +46,6 @@ module.exports = (sequelize, DataTypes) => {
       Event.belongsTo(models.UserProfile, {
         foreignKey: "userId",
         as: "creator"
-      // Relationships can be defined here if you want later
-      // Example: Event.belongsTo(models.UserProfile, { foreignKey: 'userId' });
     });
   };
 

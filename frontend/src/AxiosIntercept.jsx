@@ -2,9 +2,8 @@
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
-// Create an Axios instance pointing to your Express backend
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api/", // ✅ UPDATED to Express backend
+  baseURL: "http://localhost:3000/api/", // UPDATED to Express backend
 });
 
 // Request interceptor to attach Firebase token to every request

@@ -6,7 +6,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import UpdateProfile from "./components/UpdateProfile";
-import Admin from "./components/admin";
+import Admin from "./components/Admin";
 import UserEvents from "./components/UserEvents";
 import EditEvent from "./components/EditEvent";
 import About from "./components/About.jsx";

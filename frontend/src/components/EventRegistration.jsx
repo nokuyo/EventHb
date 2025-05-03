@@ -33,7 +33,7 @@ const EventRegistration = () => {
 
       console.log("Event registration success:", response.data);
 
-      setMessage("✅ Event registered successfully!");
+      setMessage("Event registered successfully!");
       setIsSuccess(true);
       setShowPopup(true);
 
@@ -67,7 +67,7 @@ const EventRegistration = () => {
         errorMsg = error.message;
       }
 
-      setMessage(`❌ ${errorMsg}`);
+      setMessage(`${errorMsg}`);
       setIsSuccess(false);
       setShowPopup(true);
     }
