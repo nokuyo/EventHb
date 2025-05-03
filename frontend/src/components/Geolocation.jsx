@@ -95,7 +95,7 @@ const GeolocationComponent = ({
     }
 
     try {
-      console.log("📡 Sending attendance for eventId:", eventId);
+      console.log("Sending attendance for eventId:", eventId);
       const response = await axiosInstance.post(`/event_list_view/`, {
         event_id: eventId,
         increment: 1,
