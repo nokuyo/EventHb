@@ -31,8 +31,15 @@ function Dashboard() {
   }, []);
 
   const handleAttendanceUpdate = (updatedEvent) => {
-    setEvents((prevEvents) =>
-      prevEvents.map((ev) => (ev.id === updatedEvent.id ? updatedEvent : ev))
+    setEvents((prev) =>
+      prev.map((ev) =>
+        ev.id === updatedEvent.id
+          ? {
+              ...ev,
+              estimated_attendees: updatedEvent.estimated_attendees,
+            }
+          : ev
+      )
     );
     setAttendanceMessage(`Marked attendance for: ${updatedEvent.title}`);
     setTimeout(() => setAttendanceMessage(""), 3000);

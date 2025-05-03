@@ -80,7 +80,7 @@ const GeolocationComponent = ({
     }
   }, [address]);
 
-  const thresholdDistance = 1;
+  const thresholdDistance = 2;
 
   const handleAttend = async () => {
     if (!eventId) {
