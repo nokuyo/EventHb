@@ -12,10 +12,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-/**
- * GET /event_list_view
- * Returns only the events created by the signed-in user
- */
+// GET 
 router.get("/event_list_view/", auth, async (req, res) => {
   try {
     // Find the user profile
@@ -55,7 +52,7 @@ router.get("/event_list_view/", auth, async (req, res) => {
 });
 
 
-// GET /all_events/  → everything, regardless of who created it
+// GET /all_events/  
 router.get("/all_events/", auth, async (req, res) => {
   try {
     const events = await Event.findAll({
@@ -83,10 +80,7 @@ router.get("/all_events/", auth, async (req, res) => {
 
 
 
-/**
- * POST /event_list_view
- * Creates a new event (or increments attendance) linked to the signed-in user
- */
+// POST
 router.post(
   "/event_list_view/",
   auth,

@@ -14,10 +14,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-/**
- * GET /events/my-events/
- * List all events created by the current user
- */
+// GET
 router.get("/events/my-events/", auth, async (req, res) => {
   try {
     // Ensure UserProfile exists
@@ -49,10 +46,7 @@ router.get("/events/my-events/", auth, async (req, res) => {
   }
 });
 
-/**
- * GET /events/:id/
- * Fetch a single event (owned by current user)
- */
+// GET
 router.get("/events/:id/", auth, async (req, res) => {
   try {
     const event = await Event.findByPk(req.params.id);
@@ -78,10 +72,7 @@ router.get("/events/:id/", auth, async (req, res) => {
   }
 });
 
-/**
- * PUT /events/:id/
- * Update an existing event (owned by current user)
- */
+// PUT
 router.put(
   "/events/:id/",
   auth,
@@ -119,10 +110,7 @@ router.put(
   }
 );
 
-/**
- * DELETE /events/:id/
- * Remove an event (owned by current user)
- */
+// DELETE
 router.delete("/events/:id/", auth, async (req, res) => {
   try {
     const event = await Event.findByPk(req.params.id);
